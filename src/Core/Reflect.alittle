@@ -29,7 +29,7 @@ public static NewObject(ClassInfo clazz, ...) : any
 {
     [Language(Lua)]
     return cast<Functor<(any):any>>(clazz)(...);
-    
+
     // 构造对象
     [Language(JavaScript)]
     return JavaScript.NewObject(clazz, ...);
@@ -44,3 +44,4 @@ public static Cast<T:class, O:class>(O object) : T
     if (o_info != t_info) return null;
     return cast<T>(object);
 }
+

@@ -24,26 +24,20 @@ end
 
 function _G.RequireCore(base_path)
 	local ___COROUTINE = coroutine.running()
-	Require(base_path, "Core/Reflect/ReflectRegister")
-	Require(base_path, "Core/Reflect/ReflectDefine")
-	Require(base_path, "Core/Lua/LuaBind")
-	Require(base_path, "Core/Lua/LuaClass")
-	Require(base_path, "Core/Lua/LuaException")
+	Require(base_path, "Core/Base")
+	Require(base_path, "Core/Reflect")
+	Require(base_path, "Core/Lua")
 	if _G["bit"] == nil then
 		_G["bit"] = _G["bit32"]
 	end
-	Require(base_path, "Core/Utility/Log")
-	Require(base_path, "Core/Utility/List")
-	Require(base_path, "Core/Utility/Map")
-	Require(base_path, "Core/Utility/Math")
-	Require(base_path, "Core/Utility/String")
-	Require(base_path, "Core/Utility/Time")
-	Require(base_path, "Core/Utility/Coroutine")
-	Require(base_path, "Core/Net/HttpFileReceiver")
-	Require(base_path, "Core/Net/HttpFileSender")
-	Require(base_path, "Core/Net/HttpReceiver")
-	Require(base_path, "Core/Net/HttpSender")
-	Require(base_path, "Core/Net/MsgCommon")
+	Require(base_path, "Core/Log")
+	Require(base_path, "Core/List")
+	Require(base_path, "Core/Map")
+	Require(base_path, "Core/Math")
+	Require(base_path, "Core/String")
+	Require(base_path, "Core/Time")
+	Require(base_path, "Core/Coroutine")
+	Require(base_path, "Core/Net")
 end
 
 end

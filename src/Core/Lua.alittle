@@ -2,6 +2,8 @@
 [Language(Lua)]
 namespace Lua;
 
+//Class部分////////////////////////////////////////////////////////
+
 private var rawget = lua.rawget;
 private var rawset = lua.rawset;
 private var tostring = lua.tostring;
@@ -23,7 +25,7 @@ private static __object_index_function(ObjectInfo object, string key) : any
     var getter:Functor<(ObjectInfo):any> = clazz.__getter[key];
     if (getter != null) return getter(object);
 
-    // 取到的值，一般情况下都是funciton
+        // 取到的值，一般情况下都是funciton
     var value:any = cast<Map<string, any>>(clazz)[key];
     if (value != null)
     {
@@ -33,7 +35,7 @@ private static __object_index_function(ObjectInfo object, string key) : any
         return value;
     }
     
-    // 没有的话，就是没有了
+        // 没有的话，就是没有了
     return null;
 }
 
@@ -49,7 +51,7 @@ private static __object_newindex_function(ObjectInfo object, string key, any val
         setter(object, value);
         return;
     }
-    // 如果没有就只能设置属性
+        // 如果没有就只能设置属性
     rawset(object, key, value);
 }
 
@@ -77,7 +79,7 @@ private static __class_create_function(ALittle.ClassInfo clazz, ObjectInfo objec
     // 检查是否有父类，如果有则调用父类的构造函数。
     var super:ALittle.ClassInfo = rawget(clazz, "__super");
     if (super != null) __class_create_function(super, object, ...);
-    // 如果当前类有定义Ctor函数，则调用。
+        // 如果当前类有定义Ctor函数，则调用。
     var fctor:Functor<(ObjectInfo, any)> = rawget(clazz, "Ctor");
     if (fctor != null)
         fctor(object, ...);
@@ -91,7 +93,7 @@ private static __class_index_function(ALittle.ClassInfo clazz, string key) : any
     // 如果没有父类，那么就直接返回
     if (super == null) return null;
 
-    // 获取值
+        // 获取值
     var value:any = cast<Map<string, any>>(super)[key];
     // 保存起来，便于快速查找
     rawset(clazz, key, value);
@@ -170,7 +172,7 @@ protected static Template(ALittle.ClassInfo clazz, string name, ...) : ALittle.C
     var template = child[name];
     if (template != null) return template;
 
-    // 定义模板
+        // 定义模板
     template = new ALittle.ClassInfo();
     child[name] = template;
     // 复制
@@ -185,9 +187,160 @@ protected static Template(ALittle.ClassInfo clazz, string name, ...) : ALittle.C
     template.__getter = clazz.__getter;
     // 复制模板
     template.__element = [cast<ALittle.ClassInfo>(...)];
-    
+
     // 设置类模版的元表
     setmetatable(template, __class_mt);
     // 返回模板
     return template;
+}
+
+
+//Bind部分////////////////////////////////////////////////////////
+
+private var unpack = lua.unpack;
+private var getmetatable = lua.getmetatable;
+private var coroutine = lua.coroutine;
+
+private struct FunctorMetatable
+{
+    any __call;
+    Functor<(FunctorObject):string> __tostring;
+}
+
+private struct FunctorObject
+{
+    List<any> _arg;
+    int _arg_count;
+    Functor<(any):any> _func;
+}
+
+private var __functor_mt = new FunctorMetatable();
+
+// 设置call函数。这样创建类实例对象时，可以使用A()这样的书写方式。
+private static __functor_mt__call(FunctorObject caller, ...) : any
+{
+    // 创建新的参数列表
+    var new_arg_list = new List<any>();
+    // 获取携带参数列表
+    var arg_list = caller._arg;
+    // 获取携带参数个数
+    var arg_count = caller._arg_count;
+    // 遍历参数列表，添加到新的列表中
+    for (var i = 1; i <= arg_count; 1)
+        new_arg_list[i] = arg_list[i];
+    // 获取调用参数个数
+    var add_count:int = select("#", ...);
+    // 遍历调用参数列表，添加到携带参数列表中
+    for (var i = 1; i <= add_count; 1)
+        new_arg_list[arg_count + i] = select(i, ...);
+    // 把参数列表解包，调用回调函数
+    return caller._func(unpack(new_arg_list, 1, arg_count + add_count));
+}
+__functor_mt.__call = __functor_mt__call;
+
+// 设置tostring函数
+private static __functor_mt__tostring(FunctorObject caller) : string
+{
+    return "[ALittle Functor:" .. tostring(caller) .. "]";
+}
+__functor_mt.__tostring = __functor_mt__tostring;
+
+// 提供语言生成代码使用
+protected static Bind(any func, ...) : any
+{
+    assert(func, "func == null");
+    // 如果没有携带参数，那么就直接返回func
+    if (select("#", ...) == 0) return func;
+        // 委托对象
+    var object = new FunctorObject();
+    // 保存func
+    object._func = func;
+    // 保存参数列表
+    object._arg = [...];
+    // 保存参数个数
+    object._arg_count = select("#", ...);
+    // 委托对象的metatable
+    setmetatable(object, __functor_mt);
+    // 返回委托对象
+    return object;
+}
+
+private struct CoFunctorMetatable
+{
+    any __call;
+    Functor<(CoFunctorObject):string> __tostring;
+}
+
+private struct CoFunctorObject
+{
+    Functor<(any):any> _func;
+}
+
+private var __co_functor_mt = new CoFunctorMetatable();
+// 设置call函数。这样创建类实例对象时，可以使用A()这样的书写方式。
+private static __co_functor_mt__call(CoFunctorObject caller, ...) : any
+{
+    return cast<Functor<(any):any>>(coroutine.wrap(caller._func))(...);
+}
+__co_functor_mt.__call = __co_functor_mt__call;
+
+// 设置tostring函数
+private static __co_functor_mt__tostring(CoFunctorObject caller) : string
+{
+    return "[ALittle CoWrap:" .. tostring(caller) .. "]";
+}
+__co_functor_mt.__tostring = __co_functor_mt__tostring;
+
+protected static CoWrap(any func) : CoFunctorObject
+{
+    // 委托对象
+    var object = new CoFunctorObject();
+    // 保存func
+    object._func = func;
+    // 委托对象的metatable
+    setmetatable(object, __co_functor_mt);
+    // 返回委托对象
+    return object;
+}
+
+protected static IsCoWrap(any value) : bool
+{
+    return type(value) == "table" && getmetatable(value) == __co_functor_mt;
+}
+
+
+//异常部分////////////////////////////////////////////////////////
+
+private var error = lua.error;
+
+// 提供给关键字tcall使用
+protected static TCall(...) : string
+{
+    var out_list:List<any> = [lua.pcall(...)];
+    // 如果第一个参数不是true，说明第二个调用失败的原因
+    if (out_list[1] != true)
+    {
+        if (out_list[2] == null) return "nil";
+        return out_list[2];
+    }
+        // 先获取当前list的长度
+    var l = lua.table.maxn(out_list);
+    // 把第一个设置为空
+    out_list[1] = null;
+    // 最后展开返回
+    return lua.unpack(out_list, 1, l);
+}
+
+// 提供关键字throw使用
+protected static Throw(string msg)
+{
+    error(msg);
+}
+
+// 提供关键字assert使用
+protected static Assert(any value, string msg)
+{
+    if (value != null && value != false) return;
+    if (msg == null) msg = "Assert failed";
+    error(msg);
 }
