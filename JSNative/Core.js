@@ -41,25 +41,76 @@ window.RequireFromPaths = function(base_path, rel_path, file_list) {
 
 window.RequireCore = function(base_path) {
 	return new Promise(async function(___COROUTINE, ___) {
-		await Require(base_path, "Core/JavaScript/JavaScriptClass");
-		await Require(base_path, "Core/JavaScript/JavaScriptException");
-		await Require(base_path, "Core/Reflect/ReflectRegister");
-		await Require(base_path, "Core/Reflect/ReflectDefine");
-		await Require(base_path, "Core/Utility/Log");
-		await Require(base_path, "Core/Utility/List");
-		await Require(base_path, "Core/Utility/Map");
-		await Require(base_path, "Core/Utility/Math");
-		await Require(base_path, "Core/Utility/String");
-		await Require(base_path, "Core/Utility/Time");
-		await Require(base_path, "Core/Utility/Coroutine");
-		await Require(base_path, "Core/Net/HttpFileReceiver");
-		await Require(base_path, "Core/Net/HttpFileSender");
-		await Require(base_path, "Core/Net/HttpReceiver");
-		await Require(base_path, "Core/Net/HttpSender");
-		await Require(base_path, "Core/Net/MsgCommon");
+		await Require(base_path, "Core/Base");
+		await Require(base_path, "Core/Reflect");
+		await Require(base_path, "Core/JavaScript");
+		await Require(base_path, "Core/Log");
+		await Require(base_path, "Core/List");
+		await Require(base_path, "Core/Map");
+		await Require(base_path, "Core/Math");
+		await Require(base_path, "Core/String");
+		await Require(base_path, "Core/Time");
+		await Require(base_path, "Core/Coroutine");
+		await Require(base_path, "Core/Net");
 		___COROUTINE();
 	});
 }
+
+}
+{
+if (typeof ALittle === "undefined") window.ALittle = {};
+
+
+let __all_name_struct = {};
+let __all_id_struct = new Map();
+ALittle.RegStruct = function(hash, name, info) {
+	if (__all_name_struct[name] !== undefined) {
+		return;
+	}
+	let old_info = __all_id_struct.get(hash);
+	if (old_info !== undefined) {
+		throw new Error("RegReflect 名字为" + name + "和名字为" + old_info.name + "哈希值冲突, 请为" + name + "修改名字来避开冲突！");
+	}
+	__all_name_struct[name] = info;
+	__all_id_struct.set(hash, info);
+}
+
+ALittle.FindStructByName = function(name) {
+	return __all_name_struct[name];
+}
+
+ALittle.FindStructById = function(id) {
+	return __all_id_struct.get(id);
+}
+
+ALittle.GetAllStruct = function() {
+	return __all_id_struct;
+}
+
+}
+{
+if (typeof ALittle === "undefined") window.ALittle = {};
+
+ALittle.RegStruct(-930447138, "ALittle.Thread", {
+name : "ALittle.Thread", ns_name : "ALittle", rl_name : "Thread", hash_code : -930447138,
+name_list : [],
+type_list : [],
+option_map : {}
+})
+
+ALittle.Coroutine = JavaScript.Class(undefined, {
+	Resume : function(thread, ...___args) {
+		let value = [...___args];
+		if (value.length === 0) {
+			thread();
+		} else if (value.length === 1) {
+			thread(value[1 - 1]);
+		} else {
+			thread(value);
+		}
+		return [true];
+	},
+}, "ALittle.Coroutine");
 
 }
 {
@@ -182,11 +233,6 @@ JavaScript.NewObject = function(clazz, ...___args) {
 	return object;
 }
 
-}
-{
-if (typeof JavaScript === "undefined") window.JavaScript = {};
-
-
 JavaScript.Assert = function(value, msg) {
 	if (value !== undefined && value !== false) {
 		return;
@@ -196,95 +242,6 @@ JavaScript.Assert = function(value, msg) {
 	}
 	throw new Error(msg);
 }
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-
-let __all_name_struct = {};
-let __all_id_struct = new Map();
-ALittle.RegStruct = function(hash, name, info) {
-	if (__all_name_struct[name] !== undefined) {
-		return;
-	}
-	let old_info = __all_id_struct.get(hash);
-	if (old_info !== undefined) {
-		throw new Error("RegReflect 名字为" + name + "和名字为" + old_info.name + "哈希值冲突, 请为" + name + "修改名字来避开冲突！");
-	}
-	__all_name_struct[name] = info;
-	__all_id_struct.set(hash, info);
-}
-
-ALittle.FindStructByName = function(name) {
-	return __all_name_struct[name];
-}
-
-ALittle.FindStructById = function(id) {
-	return __all_id_struct.get(id);
-}
-
-ALittle.GetAllStruct = function() {
-	return __all_id_struct;
-}
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-ALittle.RegStruct(1847150134, "ALittle.StructInfo", {
-name : "ALittle.StructInfo", ns_name : "ALittle", rl_name : "StructInfo", hash_code : 1847150134,
-name_list : ["name","ns_name","rl_name","hash_code","name_list","type_list","option_map"],
-type_list : ["string","string","string","int","List<string>","List<string>","Map<string,string>"],
-option_map : {}
-})
-ALittle.RegStruct(318154964, "ALittle.ClassInfo", {
-name : "ALittle.ClassInfo", ns_name : "ALittle", rl_name : "ClassInfo", hash_code : 318154964,
-name_list : ["__name","__super","__element","__child","__getter","__setter"],
-type_list : ["string","ALittle.ClassInfo","List<ALittle.ClassInfo>","Map<string,ALittle.ClassInfo>","Map<string,Functor<(any):any>>","Map<string,Functor<(any,any)>>"],
-option_map : {}
-})
-
-ALittle.NewObject = function(clazz, ...___args) {
-	return JavaScript.NewObject(clazz, ...___args);
-}
-
-ALittle.Cast = function(T, O, object) {
-	if (object === undefined) {
-		return undefined;
-	}
-	let o_info = (object).__class;
-	let t_info = T;
-	if (o_info !== t_info) {
-		return undefined;
-	}
-	return object;
-}
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-ALittle.RegStruct(-930447138, "ALittle.Thread", {
-name : "ALittle.Thread", ns_name : "ALittle", rl_name : "Thread", hash_code : -930447138,
-name_list : [],
-type_list : [],
-option_map : {}
-})
-
-ALittle.Coroutine = JavaScript.Class(undefined, {
-	Resume : function(thread, ...___args) {
-		let value = [...___args];
-		if (value.length === 0) {
-			thread();
-		} else if (value.length === 1) {
-			thread(value[1 - 1]);
-		} else {
-			thread(value);
-		}
-		return [true];
-	},
-}, "ALittle.Coroutine");
 
 }
 {
@@ -556,6 +513,283 @@ ALittle.Math_RandomDouble = function(min, max) {
 if (typeof ALittle === "undefined") window.ALittle = {};
 
 
+ALittle.IHttpFileReceiver = JavaScript.Class(undefined, {
+	StartReceiveFile : function(file_path, start_size) {
+		return new Promise((function(___COROUTINE, ___) {
+			___COROUTINE("not impl"); return;
+		}).bind(this));
+	},
+}, "ALittle.IHttpFileReceiver");
+
+let __all_file_callback = {};
+ALittle.RegHttpFileCallback = function(method, callback) {
+	if (__all_file_callback[method] !== undefined) {
+		ALittle.Error("RegHttpFileCallback消息回调函数注册失败，名字为" + method + "已存在");
+		return;
+	}
+	__all_file_callback[method] = callback;
+}
+
+ALittle.FindHttpFileReceiverCallback = function(method) {
+	return __all_file_callback[method];
+}
+
+ALittle.IHttpFileSender = JavaScript.Class(undefined, {
+	HandleSucceed : function() {
+	},
+	HandleProcess : function(cur_size, total_size) {
+	},
+	HandleFailed : function(reason) {
+	},
+	Stop : function() {
+	},
+	GetFilePath : function() {
+		return undefined;
+	},
+	GetTotalSize : function() {
+		return 0;
+	},
+	GetCurSize : function() {
+		return 0;
+	},
+	SendDownloadRPC : function(thread, method, content, array_buffer) {
+		throw new Error("not impl");
+	},
+	SendUploadRPC : function(thread, method, content, array_buffer) {
+		throw new Error("not impl");
+	},
+	InvokeDownload : function(method, client, content, array_buffer) {
+		return new Promise(function(___COROUTINE, ___) {
+			if (___COROUTINE === undefined) {
+				___COROUTINE("当前不是协程"); return;
+			}
+			client.SendDownloadRPC(___COROUTINE, method, content, array_buffer);
+			return;
+		});
+	},
+	InvokeUpload : function(method, client, content, array_buffer) {
+		return new Promise(function(___COROUTINE, ___) {
+			if (___COROUTINE === undefined) {
+				___COROUTINE("当前不是协程"); return;
+			}
+			client.SendUploadRPC(___COROUTINE, method, content, array_buffer);
+			return;
+		});
+	},
+}, "ALittle.IHttpFileSender");
+
+ALittle.IHttpReceiver = JavaScript.Class(undefined, {
+}, "ALittle.IHttpReceiver");
+
+let __all_receiver_callback = {};
+ALittle.RegHttpCallback = function(method, callback) {
+	if (__all_receiver_callback[method] !== undefined) {
+		ALittle.Error("RegHttpCallback消息回调函数注册失败，名字为" + method + "已存在");
+		return;
+	}
+	__all_receiver_callback[method] = callback;
+}
+
+ALittle.FindHttpCallback = function(method) {
+	return __all_receiver_callback[method];
+}
+
+let __all_download_callback = {};
+ALittle.RegHttpDownloadCallback = function(method, callback) {
+	if (__all_download_callback[method] !== undefined) {
+		ALittle.Error("RegHttpDownloadCallback消息回调函数注册失败，名字为" + method + "已存在");
+		return;
+	}
+	__all_download_callback[method] = callback;
+}
+
+ALittle.FindHttpDownloadCallback = function(method) {
+	return __all_download_callback[method];
+}
+
+ALittle.IHttpSender = JavaScript.Class(undefined, {
+	HandleSucceed : function() {
+	},
+	HandleFailed : function(reason) {
+	},
+	Stop : function() {
+	},
+	SendRPC : function(thread, method, content) {
+		throw new Error("not impl");
+	},
+	Invoke : function(method, client, content) {
+		return new Promise(function(___COROUTINE, ___) {
+			if (___COROUTINE === undefined) {
+				___COROUTINE(["当前不是协程", undefined]); return;
+			}
+			client.SendRPC(___COROUTINE, method, content);
+			return;
+		});
+	},
+}, "ALittle.IHttpSender");
+
+ALittle.IMessageWriteFactory = JavaScript.Class(undefined, {
+	WriteToStdFile : function(file_path) {
+		return false;
+	},
+	SetID : function(id) {
+	},
+	SetRpcID : function(id) {
+	},
+	ResetOffset : function() {
+	},
+	GetOffset : function() {
+		return 0;
+	},
+	SetInt : function(offset, value) {
+	},
+	WriteBool : function(value) {
+		return 0;
+	},
+	WriteInt : function(value) {
+		return 0;
+	},
+	WriteLong : function(value) {
+		return 0;
+	},
+	WriteString : function(value) {
+		return 0;
+	},
+	WriteDouble : function(value) {
+		return 0;
+	},
+}, "ALittle.IMessageWriteFactory");
+
+ALittle.IMessageReadFactory = JavaScript.Class(undefined, {
+	GetDataSize : function() {
+		return 0;
+	},
+	ReadBool : function() {
+		return false;
+	},
+	ReadInt : function() {
+		return 0;
+	},
+	ReadLong : function() {
+		return 0;
+	},
+	ReadString : function() {
+		return "";
+	},
+	ReadDouble : function() {
+		return 0;
+	},
+	GetReadSize : function() {
+		return 0;
+	},
+}, "ALittle.IMessageReadFactory");
+
+ALittle.IMsgCommon = JavaScript.Class(undefined, {
+	IsConnected : function() {
+		return false;
+	},
+	Close : function(reason) {
+	},
+	HandleConnectSucceed : function() {
+	},
+	HandleDisconnect : function() {
+	},
+	HandleConnectFailed : function(reason) {
+	},
+	HandleMessage : function(id, rpc_id, factory) {
+	},
+	SendMsg : function(T, msg) {
+		let rflt = T;
+		this.Send(rflt.hash_code, msg, 0);
+	},
+	Send : function(msg_id, msg_body, rpc_id) {
+		throw new Error("not impl");
+	},
+	SendRPC : function(thread, msg_id, msg_body) {
+	},
+	Invoke : function(msg_id, client, msg_body) {
+		client.Send(msg_id, msg_body, 0);
+	},
+	InvokeRPC : function(msg_id, client, msg_body) {
+		return new Promise(function(___COROUTINE, ___) {
+			if (___COROUTINE === undefined) {
+				___COROUTINE(["当前不是协程", undefined]); return;
+			}
+			if (!client.IsConnected()) {
+				___COROUTINE(["连接还没成功", undefined]); return;
+			}
+			client.SendRPC(___COROUTINE, msg_id, msg_body);
+			return;
+		});
+	},
+}, "ALittle.IMsgCommon");
+
+let __all_msg_callback = new Map();
+ALittle.RegMsgCallback = function(msg_id, callback) {
+	if (__all_msg_callback.get(msg_id) !== undefined) {
+		ALittle.Error("RegMsgCallback消息回调函数注册失败，名字为" + msg_id + "已存在");
+		return;
+	}
+	__all_msg_callback.set(msg_id, callback);
+}
+
+ALittle.FindMsgCallback = function(msg_id) {
+	return __all_msg_callback.get(msg_id);
+}
+
+let __all_rpc_callback = new Map();
+let __all_rpc_return_id = new Map();
+ALittle.RegMsgRpcCallback = function(msg_id, callback, return_id) {
+	if (__all_rpc_callback.get(msg_id) !== undefined) {
+		ALittle.Error("RegMsgRpcCallback消息回调函数注册失败，名字为" + msg_id + "已存在");
+		return;
+	}
+	__all_rpc_callback.set(msg_id, callback);
+	__all_rpc_return_id.set(msg_id, return_id);
+}
+
+ALittle.FindMsgRpcCallback = function(msg_id) {
+	return [__all_rpc_callback.get(msg_id), __all_rpc_return_id.get(msg_id)];
+}
+
+}
+{
+if (typeof ALittle === "undefined") window.ALittle = {};
+
+ALittle.RegStruct(1847150134, "ALittle.StructInfo", {
+name : "ALittle.StructInfo", ns_name : "ALittle", rl_name : "StructInfo", hash_code : 1847150134,
+name_list : ["name","ns_name","rl_name","hash_code","name_list","type_list","option_map"],
+type_list : ["string","string","string","int","List<string>","List<string>","Map<string,string>"],
+option_map : {}
+})
+ALittle.RegStruct(318154964, "ALittle.ClassInfo", {
+name : "ALittle.ClassInfo", ns_name : "ALittle", rl_name : "ClassInfo", hash_code : 318154964,
+name_list : ["__name","__super","__element","__child","__getter","__setter"],
+type_list : ["string","ALittle.ClassInfo","List<ALittle.ClassInfo>","Map<string,ALittle.ClassInfo>","Map<string,Functor<(any):any>>","Map<string,Functor<(any,any)>>"],
+option_map : {}
+})
+
+ALittle.NewObject = function(clazz, ...___args) {
+	return JavaScript.NewObject(clazz, ...___args);
+}
+
+ALittle.Cast = function(T, O, object) {
+	if (object === undefined) {
+		return undefined;
+	}
+	let o_info = (object).__class;
+	let t_info = T;
+	if (o_info !== t_info) {
+		return undefined;
+	}
+	return object;
+}
+
+}
+{
+if (typeof ALittle === "undefined") window.ALittle = {};
+
+
 ALittle.String_Upper = function(s) {
 	return s.toUpperCase();
 }
@@ -815,270 +1049,6 @@ ALittle.Time_GetCurYMD = function(time) {
 		}
 		return result;
 	}
-}
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-
-ALittle.IHttpFileReceiver = JavaScript.Class(undefined, {
-	StartReceiveFile : function(file_path, start_size) {
-		return new Promise((function(___COROUTINE, ___) {
-			___COROUTINE("not impl"); return;
-		}).bind(this));
-	},
-}, "ALittle.IHttpFileReceiver");
-
-let __all_callback = {};
-ALittle.RegHttpFileCallback = function(method, callback) {
-	if (__all_callback[method] !== undefined) {
-		ALittle.Error("RegHttpFileCallback消息回调函数注册失败，名字为" + method + "已存在");
-		return;
-	}
-	__all_callback[method] = callback;
-}
-
-ALittle.FindHttpFileReceiverCallback = function(method) {
-	return __all_callback[method];
-}
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-
-ALittle.IHttpFileSender = JavaScript.Class(undefined, {
-	HandleSucceed : function() {
-	},
-	HandleProcess : function(cur_size, total_size) {
-	},
-	HandleFailed : function(reason) {
-	},
-	Stop : function() {
-	},
-	GetFilePath : function() {
-		return undefined;
-	},
-	GetTotalSize : function() {
-		return 0;
-	},
-	GetCurSize : function() {
-		return 0;
-	},
-	SendDownloadRPC : function(thread, method, content, array_buffer) {
-		throw new Error("not impl");
-	},
-	SendUploadRPC : function(thread, method, content, array_buffer) {
-		throw new Error("not impl");
-	},
-	InvokeDownload : function(method, client, content, array_buffer) {
-		return new Promise(function(___COROUTINE, ___) {
-			if (___COROUTINE === undefined) {
-				___COROUTINE("当前不是协程"); return;
-			}
-			client.SendDownloadRPC(___COROUTINE, method, content, array_buffer);
-			return;
-		});
-	},
-	InvokeUpload : function(method, client, content, array_buffer) {
-		return new Promise(function(___COROUTINE, ___) {
-			if (___COROUTINE === undefined) {
-				___COROUTINE("当前不是协程"); return;
-			}
-			client.SendUploadRPC(___COROUTINE, method, content, array_buffer);
-			return;
-		});
-	},
-}, "ALittle.IHttpFileSender");
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-
-ALittle.IHttpReceiver = JavaScript.Class(undefined, {
-}, "ALittle.IHttpReceiver");
-
-let __all_callback = {};
-ALittle.RegHttpCallback = function(method, callback) {
-	if (__all_callback[method] !== undefined) {
-		ALittle.Error("RegHttpCallback消息回调函数注册失败，名字为" + method + "已存在");
-		return;
-	}
-	__all_callback[method] = callback;
-}
-
-ALittle.FindHttpCallback = function(method) {
-	return __all_callback[method];
-}
-
-let __all_download_callback = {};
-ALittle.RegHttpDownloadCallback = function(method, callback) {
-	if (__all_download_callback[method] !== undefined) {
-		ALittle.Error("RegHttpDownloadCallback消息回调函数注册失败，名字为" + method + "已存在");
-		return;
-	}
-	__all_download_callback[method] = callback;
-}
-
-ALittle.FindHttpDownloadCallback = function(method) {
-	return __all_download_callback[method];
-}
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-
-ALittle.IHttpSender = JavaScript.Class(undefined, {
-	HandleSucceed : function() {
-	},
-	HandleFailed : function(reason) {
-	},
-	Stop : function() {
-	},
-	SendRPC : function(thread, method, content) {
-		throw new Error("not impl");
-	},
-	Invoke : function(method, client, content) {
-		return new Promise(function(___COROUTINE, ___) {
-			if (___COROUTINE === undefined) {
-				___COROUTINE(["当前不是协程", undefined]); return;
-			}
-			client.SendRPC(___COROUTINE, method, content);
-			return;
-		});
-	},
-}, "ALittle.IHttpSender");
-
-}
-{
-if (typeof ALittle === "undefined") window.ALittle = {};
-
-
-ALittle.IMessageWriteFactory = JavaScript.Class(undefined, {
-	WriteToStdFile : function(file_path) {
-		return false;
-	},
-	SetID : function(id) {
-	},
-	SetRpcID : function(id) {
-	},
-	ResetOffset : function() {
-	},
-	GetOffset : function() {
-		return 0;
-	},
-	SetInt : function(offset, value) {
-	},
-	WriteBool : function(value) {
-		return 0;
-	},
-	WriteInt : function(value) {
-		return 0;
-	},
-	WriteLong : function(value) {
-		return 0;
-	},
-	WriteString : function(value) {
-		return 0;
-	},
-	WriteDouble : function(value) {
-		return 0;
-	},
-}, "ALittle.IMessageWriteFactory");
-
-ALittle.IMessageReadFactory = JavaScript.Class(undefined, {
-	GetDataSize : function() {
-		return 0;
-	},
-	ReadBool : function() {
-		return false;
-	},
-	ReadInt : function() {
-		return 0;
-	},
-	ReadLong : function() {
-		return 0;
-	},
-	ReadString : function() {
-		return "";
-	},
-	ReadDouble : function() {
-		return 0;
-	},
-	GetReadSize : function() {
-		return 0;
-	},
-}, "ALittle.IMessageReadFactory");
-
-ALittle.IMsgCommon = JavaScript.Class(undefined, {
-	IsConnected : function() {
-		return false;
-	},
-	Close : function(reason) {
-	},
-	HandleConnectSucceed : function() {
-	},
-	HandleDisconnect : function() {
-	},
-	HandleConnectFailed : function(reason) {
-	},
-	HandleMessage : function(id, rpc_id, factory) {
-	},
-	SendMsg : function(T, msg) {
-		let rflt = T;
-		this.Send(rflt.hash_code, msg, 0);
-	},
-	Send : function(msg_id, msg_body, rpc_id) {
-		throw new Error("not impl");
-	},
-	SendRPC : function(thread, msg_id, msg_body) {
-	},
-	Invoke : function(msg_id, client, msg_body) {
-		client.Send(msg_id, msg_body, 0);
-	},
-	InvokeRPC : function(msg_id, client, msg_body) {
-		return new Promise(function(___COROUTINE, ___) {
-			if (___COROUTINE === undefined) {
-				___COROUTINE(["当前不是协程", undefined]); return;
-			}
-			if (!client.IsConnected()) {
-				___COROUTINE(["连接还没成功", undefined]); return;
-			}
-			client.SendRPC(___COROUTINE, msg_id, msg_body);
-			return;
-		});
-	},
-}, "ALittle.IMsgCommon");
-
-let __all_callback = new Map();
-ALittle.RegMsgCallback = function(msg_id, callback) {
-	if (__all_callback.get(msg_id) !== undefined) {
-		ALittle.Error("RegMsgCallback消息回调函数注册失败，名字为" + msg_id + "已存在");
-		return;
-	}
-	__all_callback.set(msg_id, callback);
-}
-
-ALittle.FindMsgCallback = function(msg_id) {
-	return __all_callback.get(msg_id);
-}
-
-let __all_rpc_callback = new Map();
-let __all_rpc_return_id = new Map();
-ALittle.RegMsgRpcCallback = function(msg_id, callback, return_id) {
-	if (__all_rpc_callback.get(msg_id) !== undefined) {
-		ALittle.Error("RegMsgRpcCallback消息回调函数注册失败，名字为" + msg_id + "已存在");
-		return;
-	}
-	__all_rpc_callback.set(msg_id, callback);
-	__all_rpc_return_id.set(msg_id, return_id);
-}
-
-ALittle.FindMsgRpcCallback = function(msg_id) {
-	return [__all_rpc_callback.get(msg_id), __all_rpc_return_id.get(msg_id)];
 }
 
 }
