@@ -213,7 +213,7 @@ end
 function ALittle.IMsgCommon:HandleConnectSucceed()
 end
 
-function ALittle.IMsgCommon:HandleDisconnect()
+function ALittle.IMsgCommon:HandleDisconnected()
 end
 
 function ALittle.IMsgCommon:HandleConnectFailed(reason)

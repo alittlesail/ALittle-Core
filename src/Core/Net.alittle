@@ -150,7 +150,7 @@ public class IMsgCommon
     public fun IsConnected() : bool { return false; }
     public fun Close([Nullable] string reason) {}
     protected fun HandleConnectSucceed() {}
-    protected fun HandleDisconnect() {}
+    protected fun HandleDisconnected() {}
     protected fun HandleConnectFailed(string reason) {}
     protected fun HandleMessage(int id, int rpc_id, IMessageReadFactory factory) {}
 
