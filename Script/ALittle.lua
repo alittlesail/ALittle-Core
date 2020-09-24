@@ -27,9 +27,6 @@ function _G.RequireCore(base_path)
 	Require(base_path, "Core/Base")
 	Require(base_path, "Core/Reflect")
 	Require(base_path, "Core/Lua")
-	if _G["bit"] == nil then
-		_G["bit"] = _G["bit32"]
-	end
 	Require(base_path, "Core/Log")
 	Require(base_path, "Core/List")
 	Require(base_path, "Core/Map")

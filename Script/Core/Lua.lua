@@ -53,6 +53,7 @@ local tostring = tostring
 local setmetatable = setmetatable
 local type = type
 local select = select
+local unpack = table.unpack
 local __object_index_function
 __object_index_function = function(object, key)
 	local clazz = rawget(object, "__class")
@@ -176,7 +177,6 @@ function Lua.Template(clazz, name, ...)
 	return template
 end
 
-local unpack = unpack
 local getmetatable = getmetatable
 local coroutine = coroutine
 local __functor_mt = {}
@@ -254,7 +254,10 @@ function Lua.TCall(...)
 		end
 		return out_list[2]
 	end
-	local l = table.maxn(out_list)
+	local l = 0
+	for index, _ in ___ipairs(out_list) do
+		l = index
+	end
 	out_list[1] = nil
 	return unpack(out_list, 1, l)
 end

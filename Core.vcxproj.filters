@@ -15,108 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Language\Lua\io.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\Lua\lib.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\Lua\math.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\Lua\os.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\Lua\package.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\Lua\string.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\Lua\table.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\Lua\bit.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\Lua\coroutine.alittle">
-      <Filter>Language\Lua</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\array.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\console.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\function.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\object.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\string.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\math.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\time.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\json.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\arraybuffer.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\dataview.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\textcoder.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\uint8array.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\websocket.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\xmlhttprequest.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\document.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\navigator.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\window.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\scriptelement.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\domelement.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\bodyelement.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
     <None Include="src\ALittle.alittle" />
-    <None Include="src\Language\JavaScript\lib.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\map.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\location.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\wx.alittle">
-      <Filter>Language\JavaScript</Filter>
-    </None>
-    <None Include="src\Language\JavaScript\canvas.alittle">
-      <Filter>Language\JavaScript</Filter>
+    <None Include="src\Core\Lua.alittle">
+      <Filter>Core</Filter>
     </None>
     <None Include="src\Core\Map.alittle">
       <Filter>Core</Filter>
@@ -151,8 +52,104 @@
     <None Include="src\Core\Log.alittle">
       <Filter>Core</Filter>
     </None>
-    <None Include="src\Core\Lua.alittle">
-      <Filter>Core</Filter>
+    <None Include="src\Language\JavaScript\map.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\math.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\navigator.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\object.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\scriptelement.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\string.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\textcoder.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\time.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\uint8array.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\websocket.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\window.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\wx.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\xmlhttprequest.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\array.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\arraybuffer.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\bodyelement.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\canvas.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\console.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\dataview.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\document.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\domelement.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\function.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\json.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\lib.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\JavaScript\location.alittle">
+      <Filter>Language\JavaScript</Filter>
+    </None>
+    <None Include="src\Language\Lua\math.alittle">
+      <Filter>Language\Lua</Filter>
+    </None>
+    <None Include="src\Language\Lua\os.alittle">
+      <Filter>Language\Lua</Filter>
+    </None>
+    <None Include="src\Language\Lua\package.alittle">
+      <Filter>Language\Lua</Filter>
+    </None>
+    <None Include="src\Language\Lua\string.alittle">
+      <Filter>Language\Lua</Filter>
+    </None>
+    <None Include="src\Language\Lua\table.alittle">
+      <Filter>Language\Lua</Filter>
+    </None>
+    <None Include="src\Language\Lua\coroutine.alittle">
+      <Filter>Language\Lua</Filter>
+    </None>
+    <None Include="src\Language\Lua\io.alittle">
+      <Filter>Language\Lua</Filter>
+    </None>
+    <None Include="src\Language\Lua\lib.alittle">
+      <Filter>Language\Lua</Filter>
     </None>
   </ItemGroup>
 </Project>

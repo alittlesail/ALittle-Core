@@ -6,14 +6,17 @@ private var insert = lua.table.insert;
 [Language(Lua)]
 private var remove = lua.table.remove;
 [Language(Lua)]
-private var maxn = lua.table.maxn;
-[Language(Lua)]
 private var sort = lua.table.sort;
 
 public static List_MaxN<T>(const List<T> list) : int
 {
     [Language(Lua)]
-    return maxn(list);
+    var len = 0;
+    [Language(Lua)]
+    for (var index, _ in list)
+        len = index;
+    [Language(Lua)]
+    return len;
     
     [Language(JavaScript)]
     return cast<javascript.Array>(list).length;

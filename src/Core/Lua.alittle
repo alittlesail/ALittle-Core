@@ -10,6 +10,7 @@ private var tostring = lua.tostring;
 private var setmetatable = lua.setmetatable;
 private var type = lua.type;
 private var select = lua.select;
+private var unpack = lua.table.unpack;
 
 private struct ObjectInfo
 {
@@ -197,7 +198,6 @@ protected static Template(ALittle.ClassInfo clazz, string name, ...) : ALittle.C
 
 //Bind部分////////////////////////////////////////////////////////
 
-private var unpack = lua.unpack;
 private var getmetatable = lua.getmetatable;
 private var coroutine = lua.coroutine;
 
@@ -323,12 +323,14 @@ protected static TCall(...) : string
         if (out_list[2] == null) return "nil";
         return out_list[2];
     }
-        // 先获取当前list的长度
-    var l = lua.table.maxn(out_list);
+    // 先获取当前list的长度
+    var l = 0;
+    for (var index, _ in out_list)
+    	l = index;
     // 把第一个设置为空
     out_list[1] = null;
     // 最后展开返回
-    return lua.unpack(out_list, 1, l);
+    return unpack(out_list, 1, l);
 }
 
 // 提供关键字throw使用

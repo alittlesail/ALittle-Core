@@ -7,10 +7,13 @@ local ___ipairs = ipairs
 
 local insert = table.insert
 local remove = table.remove
-local maxn = table.maxn
 local sort = table.sort
 function ALittle.List_MaxN(list)
-	return maxn(list)
+	local len = 0
+	for index, _ in ___ipairs(list) do
+		len = index
+	end
+	return len
 end
 
 function ALittle.List_Push(list, object)
