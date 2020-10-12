@@ -14,6 +14,14 @@ function _G.Require(base_path, url)
 	return nil
 end
 
+function _G.RunScript(script, path)
+	if _G["core_run"] ~= nil then
+		_G["core_run"](script, path)
+	else
+		load(script, path)()
+	end
+end
+
 function _G.RequireFromPaths(base_path, rel_path, file_list)
 	local ___COROUTINE = coroutine.running()
 	for index, path in ___ipairs(file_list) do

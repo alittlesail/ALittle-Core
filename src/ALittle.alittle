@@ -42,6 +42,20 @@ public await static Require(string base_path, string url) : string
     return null;
 }
 
+// script 脚本代码
+// path 用于标记脚本来源
+public static RunScript(string script, string path)
+{
+    [Language(JavaScript)]
+    javascript.eval(script);
+
+    [Language(Lua)]
+    if (_G["core_run"] != null)
+        cast<Functor<(string,string)>>(_G["core_run"])(script, path);
+    else
+        lua.load(script, path)();
+}
+
 // base_path 基本路径，如果不为空，那么要/结尾
 // rel_path 文件相对src的路径，不要/开头，不要/开头
 // file_list 是paths关键字直接的返回结果
