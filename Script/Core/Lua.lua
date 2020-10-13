@@ -254,12 +254,8 @@ function Lua.TCall(...)
 		end
 		return out_list[2]
 	end
-	local l = 0
-	for index, _ in ___ipairs(out_list) do
-		l = index
-	end
 	out_list[1] = nil
-	return unpack(out_list, 1, l)
+	return unpack(out_list)
 end
 
 function Lua.Throw(msg)

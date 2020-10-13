@@ -323,14 +323,10 @@ protected static TCall(...) : string
         if (out_list[2] == null) return "nil";
         return out_list[2];
     }
-    // 先获取当前list的长度
-    var l = 0;
-    for (var index, _ in out_list)
-    	l = index;
     // 把第一个设置为空
     out_list[1] = null;
     // 最后展开返回
-    return unpack(out_list, 1, l);
+    return unpack(out_list);
 }
 
 // 提供关键字throw使用
