@@ -136,13 +136,13 @@ public static String_Trim(string text) : string
 }
 
 // 根据分隔符拆分字符串成列表，正常版本
-public static String_Split(string target, string sep) : List<string>
+public static String_Split(string target, string sep, [Nullable] int start_pos) : List<string>
 {
     if (target == null || target == "") return new List<string>();
     if (sep == null || sep == "") sep = ",";
     var fields = new List<string>();
     var fields_count = 0;
-    var start_pos = 1;
+    if (start_pos == null) start_pos = 1;
     while (true)
     {
         var start_index = String_Find(target, sep, start_pos);

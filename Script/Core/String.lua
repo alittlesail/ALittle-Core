@@ -53,7 +53,7 @@ function ALittle.String_Trim(text)
 	return string.gsub(text, "^%s*(.-)%s*$", "%1")
 end
 
-function ALittle.String_Split(target, sep)
+function ALittle.String_Split(target, sep, start_pos)
 	if target == nil or target == "" then
 		return {}
 	end
@@ -62,7 +62,9 @@ function ALittle.String_Split(target, sep)
 	end
 	local fields = {}
 	local fields_count = 0
-	local start_pos = 1
+	if start_pos == nil then
+		start_pos = 1
+	end
 	while true do
 		local start_index = ALittle.String_Find(target, sep, start_pos)
 		if start_index == nil then
