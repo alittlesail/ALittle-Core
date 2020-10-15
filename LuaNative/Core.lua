@@ -14,6 +14,14 @@ function _G.Require(base_path, url)
 	return nil
 end
 
+function _G.RunScript(script, path)
+	if _G["core_run"] ~= nil then
+		_G["core_run"](script, path)
+	else
+		load(script, path)()
+	end
+end
+
 function _G.RequireFromPaths(base_path, rel_path, file_list)
 	local ___COROUTINE = coroutine.running()
 	for index, path in ___ipairs(file_list) do
@@ -27,9 +35,6 @@ function _G.RequireCore(base_path)
 	Require(base_path, "Core/Base")
 	Require(base_path, "Core/Reflect")
 	Require(base_path, "Core/Lua")
-	if _G["bit"] == nil then
-		_G["bit"] = _G["bit32"]
-	end
 	Require(base_path, "Core/Log")
 	Require(base_path, "Core/List")
 	Require(base_path, "Core/Map")
@@ -166,6 +171,7 @@ local tostring = tostring
 local setmetatable = setmetatable
 local type = type
 local select = select
+local unpack = table.unpack
 local __object_index_function
 __object_index_function = function(object, key)
 	local clazz = rawget(object, "__class")
@@ -289,7 +295,6 @@ function Lua.Template(clazz, name, ...)
 	return template
 end
 
-local unpack = unpack
 local getmetatable = getmetatable
 local coroutine = coroutine
 local __functor_mt = {}
@@ -367,9 +372,8 @@ function Lua.TCall(...)
 		end
 		return out_list[2]
 	end
-	local l = table.maxn(out_list)
 	out_list[1] = nil
-	return unpack(out_list, 1, l)
+	return unpack(out_list)
 end
 
 function Lua.Throw(msg)
@@ -466,10 +470,13 @@ local ___ipairs = ipairs
 
 local insert = table.insert
 local remove = table.remove
-local maxn = table.maxn
 local sort = table.sort
 function ALittle.List_MaxN(list)
-	return maxn(list)
+	local len = 0
+	for index, _ in ___ipairs(list) do
+		len = index
+	end
+	return len
 end
 
 function ALittle.List_Push(list, object)
@@ -717,7 +724,7 @@ function ALittle.String_Trim(text)
 	return string.gsub(text, "^%s*(.-)%s*$", "%1")
 end
 
-function ALittle.String_Split(target, sep)
+function ALittle.String_Split(target, sep, start_pos)
 	if target == nil or target == "" then
 		return {}
 	end
@@ -726,7 +733,9 @@ function ALittle.String_Split(target, sep)
 	end
 	local fields = {}
 	local fields_count = 0
-	local start_pos = 1
+	if start_pos == nil then
+		start_pos = 1
+	end
 	while true do
 		local start_index = ALittle.String_Find(target, sep, start_pos)
 		if start_index == nil then
@@ -1062,7 +1071,7 @@ end
 function ALittle.IMsgCommon:HandleConnectSucceed()
 end
 
-function ALittle.IMsgCommon:HandleDisconnect()
+function ALittle.IMsgCommon:HandleDisconnected()
 end
 
 function ALittle.IMsgCommon:HandleConnectFailed(reason)
