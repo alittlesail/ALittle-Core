@@ -67,7 +67,7 @@ ALittle.String_Trim = function(text) {
 	return text.trim();
 }
 
-ALittle.String_Split = function(target, sep) {
+ALittle.String_Split = function(target, sep, start_pos) {
 	if (target === undefined || target === "") {
 		return [];
 	}
@@ -76,7 +76,9 @@ ALittle.String_Split = function(target, sep) {
 	}
 	let fields = [];
 	let fields_count = 0;
-	let start_pos = 1;
+	if (start_pos === undefined) {
+		start_pos = 1;
+	}
 	while (true) {
 		let start_index = ALittle.String_Find(target, sep, start_pos);
 		if (start_index === undefined) {

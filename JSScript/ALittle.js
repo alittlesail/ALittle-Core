@@ -26,6 +26,10 @@ window.Require = function(base_path, url) {
 	});
 }
 
+window.RunScript = function(script, path) {
+	eval(script);
+}
+
 window.RequireFromPaths = function(base_path, rel_path, file_list) {
 	return new Promise(async function(___COROUTINE, ___) {
 		let ___OBJECT_1 = file_list;

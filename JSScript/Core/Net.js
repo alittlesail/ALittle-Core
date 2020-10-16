@@ -181,7 +181,7 @@ ALittle.IMsgCommon = JavaScript.Class(undefined, {
 	},
 	HandleConnectSucceed : function() {
 	},
-	HandleDisconnect : function() {
+	HandleDisconnected : function() {
 	},
 	HandleConnectFailed : function(reason) {
 	},
