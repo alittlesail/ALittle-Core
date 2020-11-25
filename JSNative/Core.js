@@ -884,6 +884,12 @@ ALittle.IHttpFileSender = JavaScript.Class(undefined, {
 }, "ALittle.IHttpFileSender");
 
 ALittle.IHttpReceiver = JavaScript.Class(undefined, {
+	Ctor : function(method) {
+		this._method = method;
+	},
+	get method() {
+		return this._method;
+	},
 }, "ALittle.IHttpReceiver");
 
 let __all_receiver_callback = {};
@@ -900,6 +906,7 @@ ALittle.FindHttpCallback = function(method) {
 }
 
 let __all_download_callback = {};
+let __download_callback_factory = undefined;
 ALittle.RegHttpDownloadCallback = function(method, callback) {
 	if (__all_download_callback[method] !== undefined) {
 		ALittle.Error("RegHttpDownloadCallback消息回调函数注册失败，名字为" + method + "已存在");
@@ -908,8 +915,16 @@ ALittle.RegHttpDownloadCallback = function(method, callback) {
 	__all_download_callback[method] = callback;
 }
 
+ALittle.RegHttpDownloadCallbackFactory = function(value) {
+	__download_callback_factory = value;
+}
+
 ALittle.FindHttpDownloadCallback = function(method) {
-	return __all_download_callback[method];
+	let callback = __all_download_callback[method];
+	if (callback === undefined && __download_callback_factory !== undefined) {
+		callback = __download_callback_factory(method);
+	}
+	return callback;
 }
 
 ALittle.IHttpSender = JavaScript.Class(undefined, {

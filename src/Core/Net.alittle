@@ -58,7 +58,14 @@ public class IHttpFileSender
 // Http协议接口类，负责处理
 public class IHttpReceiver
 {
+    private string _method;
 
+    public ctor(string method)
+    {
+        this._method = method;
+    }
+
+    public get method() : string { return this._method; }
 }
 
 private var __all_receiver_callback = new Map<string, Functor<await(IHttpReceiver, any):any>>();
@@ -78,6 +85,7 @@ public static FindHttpCallback(string method) : Functor<await(IHttpReceiver, any
 }
 
 private var __all_download_callback = new Map<string, Functor<await(IHttpReceiver, any):string, int>>();
+private var __download_callback_factory:Functor<(string):Functor<await(IHttpReceiver, any):string, int>>;
 protected static RegHttpDownloadCallback(string method, Functor<await(IHttpReceiver, any):string, int> callback)
 {
     if (__all_download_callback[method] != null)
@@ -87,10 +95,18 @@ protected static RegHttpDownloadCallback(string method, Functor<await(IHttpRecei
     }
     __all_download_callback[method] = callback;
 }
+// 注册下载回调工程
+public static RegHttpDownloadCallbackFactory(Functor<(string):Functor<await(IHttpReceiver, any):string, int>> value)
+{
+    __download_callback_factory = value;
+}
 // 获取回调函数
 public static FindHttpDownloadCallback(string method) : Functor<await(IHttpReceiver, any):string, int>
 {
-    return __all_download_callback[method];
+    var callback = __all_download_callback[method];
+    if (callback == null && __download_callback_factory != null)
+        callback = __download_callback_factory(method);
+    return callback;
 }
 
 // Http协议接口类，负责请求发送

@@ -1,6 +1,7 @@
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ___rawset = rawset
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -79,6 +80,14 @@ end
 
 ALittle.IHttpReceiver = Lua.Class(nil, "ALittle.IHttpReceiver")
 
+function ALittle.IHttpReceiver:Ctor(method)
+	___rawset(self, "_method", method)
+end
+
+function ALittle.IHttpReceiver.__getter:method()
+	return self._method
+end
+
 local __all_receiver_callback = {}
 function ALittle.RegHttpCallback(method, callback)
 	if __all_receiver_callback[method] ~= nil then
@@ -93,6 +102,7 @@ function ALittle.FindHttpCallback(method)
 end
 
 local __all_download_callback = {}
+local __download_callback_factory = nil
 function ALittle.RegHttpDownloadCallback(method, callback)
 	if __all_download_callback[method] ~= nil then
 		ALittle.Error("RegHttpDownloadCallback消息回调函数注册失败，名字为" .. method .. "已存在")
@@ -101,8 +111,16 @@ function ALittle.RegHttpDownloadCallback(method, callback)
 	__all_download_callback[method] = callback
 end
 
+function ALittle.RegHttpDownloadCallbackFactory(value)
+	__download_callback_factory = value
+end
+
 function ALittle.FindHttpDownloadCallback(method)
-	return __all_download_callback[method]
+	local callback = __all_download_callback[method]
+	if callback == nil and __download_callback_factory ~= nil then
+		callback = __download_callback_factory(method)
+	end
+	return callback
 end
 
 ALittle.IHttpSender = Lua.Class(nil, "ALittle.IHttpSender")
