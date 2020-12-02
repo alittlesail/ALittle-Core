@@ -8,6 +8,7 @@ public class DataView
     public ctor(ArrayBuffer buffer, [Nullable] int offset, [Nullable] int length) {}
     
     public fun setInt8(int offset, int value) {}
+    public fun getInt8(int offset) : int {}
     public fun setUint8(int offset, int value) {}
     public fun getUint8(int offset) : int {}
     
