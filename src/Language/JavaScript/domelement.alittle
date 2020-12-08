@@ -3,18 +3,21 @@
 register namespace javascript;
 
 // 微信触屏事件
-public struct WXDomElementOnTouchEvent
-{
-    List<DomElementOnTouchEvent> touches;
-    List<DomElementOnTouchEvent> changedTouches;
-}
-
 public struct DomElementOnTouchEvent
 {
-    DomElement srcElement;
     string type;
+    DomElement srcElement;
+    List<DomElementTouchInfo> touches;
+    List<DomElementTouchInfo> changedTouches;
+    List<DomElementTouchInfo> targetTouches;
+}
+
+public struct DomElementTouchInfo
+{
+    DomElement target;
     int pageX;
     int pageY;
+    int identifier;
 }
 
 public struct DomElementOnMouseEvent
@@ -49,6 +52,7 @@ public class DomElement
     public set ontouchstart(Functor<(DomElementOnTouchEvent)> func) {}
     public set ontouchmove(Functor<(DomElementOnTouchEvent)> func) {}
     public set ontouchend(Functor<(DomElementOnTouchEvent)> func) {}
+    public set ontouchcancel(Functor<(DomElementOnTouchEvent)> func) {}
     
     public set onmousedown(Functor<(DomElementOnMouseEvent)> func) {}
     public set onmousemove(Functor<(DomElementOnMouseEvent)> func) {}

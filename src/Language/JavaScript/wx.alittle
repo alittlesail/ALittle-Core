@@ -39,9 +39,10 @@ public class WxRequestTask
 public class wx
 {
 	public fun getSystemInfoSync() : WxSystemInfo {}
-	public fun onTouchStart(Functor<(javascript.WXDomElementOnTouchEvent)> callback) {}
-	public fun onTouchMove(Functor<(javascript.WXDomElementOnTouchEvent)> callback) {}
-	public fun onTouchEnd(Functor<(javascript.WXDomElementOnTouchEvent)> callback) {}
+	public fun onTouchStart(Functor<(javascript.DomElementOnTouchEvent)> callback) {}
+	public fun onTouchMove(Functor<(javascript.DomElementOnTouchEvent)> callback) {}
+	public fun onTouchEnd(Functor<(javascript.DomElementOnTouchEvent)> callback) {}
+    public fun onTouchCancel(Functor<(javascript.DomElementOnTouchEvent)> callback) {}
 	public fun request(WxRequestInfo info) : WxRequestTask {}
 }
 
