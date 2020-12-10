@@ -52,7 +52,7 @@ private static __object_newindex_function(ObjectInfo object, string key, any val
         setter(object, value);
         return;
     }
-        // 如果没有就只能设置属性
+    // 如果没有就只能设置属性
     rawset(object, key, value);
 }
 
