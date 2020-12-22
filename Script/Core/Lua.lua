@@ -3,6 +3,8 @@ do
 if _G.Lua == nil then _G.Lua = {} end
 local ___pairs = pairs
 local ___ipairs = ipairs
+local Lua = Lua
+local ALittle = ALittle
 
 ALittle.RegStruct(-2114130826, "Lua.CoFunctorMetatable", {
 name = "Lua.CoFunctorMetatable", ns_name = "Lua", rl_name = "CoFunctorMetatable", hash_code = -2114130826,
