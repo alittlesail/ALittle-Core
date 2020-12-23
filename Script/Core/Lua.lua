@@ -180,7 +180,6 @@ function Lua.Template(clazz, name, ...)
 end
 
 local getmetatable = getmetatable
-local coroutine = coroutine
 local __functor_mt = {}
 local __functor_mt__call
 __functor_mt__call = function(caller, ...)
@@ -223,10 +222,11 @@ function Lua.Bind(func, ...)
 	return object
 end
 
+local wrap = coroutine.wrap
 local __co_functor_mt = {}
 local __co_functor_mt__call
 __co_functor_mt__call = function(caller, ...)
-	return coroutine.wrap(caller._func)(...)
+	return wrap(caller._func)(...)
 end
 
 __co_functor_mt.__call = __co_functor_mt__call
@@ -248,6 +248,7 @@ function Lua.IsCoWrap(value)
 end
 
 local error = error
+local pcall = pcall
 function Lua.TCall(...)
 	local out_list = {pcall(...)}
 	if out_list[1] ~= true then

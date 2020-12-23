@@ -199,7 +199,6 @@ protected static Template(ALittle.ClassInfo clazz, string name, ...) : ALittle.C
 //Bind部分////////////////////////////////////////////////////////
 
 private var getmetatable = lua.getmetatable;
-private var coroutine = lua.coroutine;
 
 private struct FunctorMetatable
 {
@@ -276,11 +275,13 @@ private struct CoFunctorObject
     Functor<(any):any> _func;
 }
 
+private var wrap = lua.coroutine.wrap;
+
 private var __co_functor_mt = new CoFunctorMetatable();
 // 设置call函数。这样创建类实例对象时，可以使用A()这样的书写方式。
 private static __co_functor_mt__call(CoFunctorObject caller, ...) : any
 {
-    return cast<Functor<(any):any>>(coroutine.wrap(caller._func))(...);
+    return cast<Functor<(any):any>>(wrap(caller._func))(...);
 }
 __co_functor_mt.__call = __co_functor_mt__call;
 
@@ -308,15 +309,15 @@ protected static IsCoWrap(any value) : bool
     return type(value) == "table" && getmetatable(value) == __co_functor_mt;
 }
 
-
 //异常部分////////////////////////////////////////////////////////
 
 private var error = lua.error;
+private var pcall = lua.pcall;
 
 // 提供给关键字tcall使用
 protected static TCall(...) : string
 {
-    var out_list:List<any> = [lua.pcall(...)];
+    var out_list:List<any> = [pcall(...)];
     // 如果第一个参数不是true，说明第二个调用失败的原因
     if (out_list[1] != true)
     {
