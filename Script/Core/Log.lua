@@ -4,7 +4,7 @@ if _G.ALittle == nil then _G.ALittle = {} end
 local ___pairs = pairs
 local ___ipairs = ipairs
 local ALittle = ALittle
-local ALittle = ALittle
+local Lua = Lua
 
 
 ALittle.LogLevel = {

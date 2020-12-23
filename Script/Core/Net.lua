@@ -5,7 +5,7 @@ local ___rawset = rawset
 local ___pairs = pairs
 local ___ipairs = ipairs
 local ALittle = ALittle
-local ALittle = ALittle
+local Lua = Lua
 
 
 ALittle.IHttpFileReceiver = Lua.Class(nil, "ALittle.IHttpFileReceiver")

@@ -26,7 +26,7 @@ private static __object_index_function(ObjectInfo object, string key) : any
     var getter:Functor<(ObjectInfo):any> = clazz.__getter[key];
     if (getter != null) return getter(object);
 
-        // 取到的值，一般情况下都是funciton
+    // 取到的值，一般情况下都是funciton
     var value:any = cast<Map<string, any>>(clazz)[key];
     if (value != null)
     {
@@ -36,7 +36,7 @@ private static __object_index_function(ObjectInfo object, string key) : any
         return value;
     }
     
-        // 没有的话，就是没有了
+    // 没有的话，就是没有了
     return null;
 }
 
