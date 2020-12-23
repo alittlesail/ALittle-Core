@@ -2,9 +2,6 @@
 do
 local ___pairs = pairs
 local ___ipairs = ipairs
-local alittle = alittle
-local ALittle = ALittle
-local Lua = Lua
 
 
 function _G.Require(base_path, url)

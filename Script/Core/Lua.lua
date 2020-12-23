@@ -1,10 +1,10 @@
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.Lua == nil then _G.Lua = {} end
-local ___pairs = pairs
-local ___ipairs = ipairs
 local Lua = Lua
 local ALittle = ALittle
+local ___pairs = pairs
+local ___ipairs = ipairs
 
 ALittle.RegStruct(-2114130826, "Lua.CoFunctorMetatable", {
 name = "Lua.CoFunctorMetatable", ns_name = "Lua", rl_name = "CoFunctorMetatable", hash_code = -2114130826,
