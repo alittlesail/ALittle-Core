@@ -10,7 +10,7 @@ local ___ipairs = ipairs
 local insert = table.insert
 local remove = table.remove
 local sort = table.sort
-function ALittle.List_MaxN(list)
+function ALittle.List_Len(list)
 	local len = 0
 	for index, _ in ___ipairs(list) do
 		len = index
@@ -23,7 +23,7 @@ function ALittle.List_Push(list, object)
 end
 
 function ALittle.List_Shuffle(list)
-	local len = ALittle.List_MaxN(list)
+	local len = ALittle.List_Len(list)
 	local i = 1
 	while true do
 		if not(i <= len) then break end

@@ -8,7 +8,7 @@ private var remove = lua.table.remove;
 [Language(Lua)]
 private var sort = lua.table.sort;
 
-public static List_MaxN<T>(const List<T> list) : int
+public static List_Len<T>(const List<T> list) : int
 {
     [Language(Lua)]
     var len = 0;
@@ -42,7 +42,7 @@ public static List_Push<T>(List<T> list, T object)
 
 public static List_Shuffle<T>(List<T> list)
 {
-    var len = List_MaxN(list);
+    var len = List_Len(list);
     for (var i = 1; i <= len; 1)
     {
         var index = Math_RandomInt(i, len);
