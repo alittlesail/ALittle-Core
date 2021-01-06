@@ -49,6 +49,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -83,6 +85,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -119,6 +123,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.Lua == nil then _G.Lua = {} end
+local Lua = Lua
+local ALittle = ALittle
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -296,7 +302,6 @@ function Lua.Template(clazz, name, ...)
 end
 
 local getmetatable = getmetatable
-local coroutine = coroutine
 local __functor_mt = {}
 local __functor_mt__call
 __functor_mt__call = function(caller, ...)
@@ -339,10 +344,11 @@ function Lua.Bind(func, ...)
 	return object
 end
 
+local wrap = coroutine.wrap
 local __co_functor_mt = {}
 local __co_functor_mt__call
 __co_functor_mt__call = function(caller, ...)
-	return coroutine.wrap(caller._func)(...)
+	return wrap(caller._func)(...)
 end
 
 __co_functor_mt.__call = __co_functor_mt__call
@@ -364,6 +370,7 @@ function Lua.IsCoWrap(value)
 end
 
 local error = error
+local pcall = pcall
 function Lua.TCall(...)
 	local out_list = {pcall(...)}
 	if out_list[1] ~= true then
@@ -394,6 +401,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -464,6 +473,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -471,7 +482,7 @@ local ___ipairs = ipairs
 local insert = table.insert
 local remove = table.remove
 local sort = table.sort
-function ALittle.List_MaxN(list)
+function ALittle.List_Len(list)
 	local len = 0
 	for index, _ in ___ipairs(list) do
 		len = index
@@ -484,7 +495,7 @@ function ALittle.List_Push(list, object)
 end
 
 function ALittle.List_Shuffle(list)
-	local len = ALittle.List_MaxN(list)
+	local len = ALittle.List_Len(list)
 	local i = 1
 	while true do
 		if not(i <= len) then break end
@@ -560,6 +571,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -572,6 +585,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -672,6 +687,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -819,6 +836,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -839,6 +858,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___pairs = pairs
 local ___ipairs = ipairs
 
@@ -859,6 +880,8 @@ end
 -- ALittle Generate Lua And Do Not Edit This Line!
 do
 if _G.ALittle == nil then _G.ALittle = {} end
+local ALittle = ALittle
+local Lua = Lua
 local ___rawset = rawset
 local ___pairs = pairs
 local ___ipairs = ipairs

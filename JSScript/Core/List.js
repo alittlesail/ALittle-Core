@@ -2,7 +2,7 @@
 if (typeof ALittle === "undefined") window.ALittle = {};
 
 
-ALittle.List_MaxN = function(list) {
+ALittle.List_Len = function(list) {
 	return list.length;
 }
 
@@ -17,7 +17,7 @@ ALittle.List_Push = function(list, object) {
 }
 
 ALittle.List_Shuffle = function(list) {
-	let len = ALittle.List_MaxN(list);
+	let len = ALittle.List_Len(list);
 	for (let i = 1; i <= len; i += 1) {
 		let index = ALittle.Math_RandomInt(i, len);
 		let temp = list[index - 1];
