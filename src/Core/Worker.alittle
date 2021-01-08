@@ -12,7 +12,7 @@ protected struct WorkerMessage
 protected class IWorker
 {
     public fun IsStopped() : bool { return false; }
-    public fun Stoped([Nullable] string reason) {}
+    public fun Stop([Nullable] string reason) {}
 
     protected fun HandleMessage(WorkerMessage worker_msg) {}
 
@@ -29,7 +29,7 @@ protected class IWorker
     }
 
     // 发送数据
-    protected fun Send(WorkerMessage msg) { throw("not impl"); }
+    protected fun Send(WorkerMessage msg) { throw("IWorker Send not impl"); }
 
     // 发送rpc
     protected fun SendRPC(Thread thread, int msg_id, any msg_body) { }
@@ -47,7 +47,7 @@ protected class IWorker
     {
         if (co == null) return "当前不是协程", null;
     
-        if (!client.IsStopped())
+        if (client.IsStopped())
             return "已停止", null;
     
         client.SendRPC(co, msg_id, msg_body);

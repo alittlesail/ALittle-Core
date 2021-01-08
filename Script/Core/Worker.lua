@@ -19,7 +19,7 @@ function ALittle.IWorker:IsStopped()
 	return false
 end
 
-function ALittle.IWorker:Stoped(reason)
+function ALittle.IWorker:Stop(reason)
 end
 
 function ALittle.IWorker:HandleMessage(worker_msg)
@@ -35,7 +35,7 @@ function ALittle.IWorker:SendMsg(T, msg)
 end
 
 function ALittle.IWorker:Send(msg)
-	Lua.Throw("not impl")
+	Lua.Throw("IWorker Send not impl")
 end
 
 function ALittle.IWorker:SendRPC(thread, msg_id, msg_body)
@@ -54,7 +54,7 @@ function ALittle.IWorker.InvokeRPC(msg_id, client, msg_body)
 	if ___COROUTINE == nil then
 		return "当前不是协程", nil
 	end
-	if not client:IsStopped() then
+	if client:IsStopped() then
 		return "已停止", nil
 	end
 	client:SendRPC(___COROUTINE, msg_id, msg_body)
