@@ -1,7 +1,7 @@
 
 namespace ALittle;
 
-public struct WorkerMessage
+protected struct WorkerMessage
 {
     int id;
     int rpc_id;
@@ -9,7 +9,7 @@ public struct WorkerMessage
     string reason;
 }
 
-public class IWorker
+protected class IWorker
 {
     public fun IsStopped() : bool { return false; }
     public fun Stoped([Nullable] string reason) {}
