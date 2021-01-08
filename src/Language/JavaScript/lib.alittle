@@ -28,3 +28,5 @@ public static mozCancelAnimationFrame(int id) {}
 
 public static require(string path) {}
 public static eval(string script) {}
+
+public static importScripts(string path) {}

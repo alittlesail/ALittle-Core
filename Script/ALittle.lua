@@ -30,8 +30,10 @@ function _G.RequireFromPaths(base_path, rel_path, file_list)
 	end
 end
 
+_G.A_CoreBasePath = nil
 function _G.RequireCore(base_path)
 	local ___COROUTINE = coroutine.running()
+	A_CoreBasePath = base_path
 	Require(base_path, "Core/Base")
 	Require(base_path, "Core/Reflect")
 	Require(base_path, "Core/Lua")
@@ -43,6 +45,7 @@ function _G.RequireCore(base_path)
 	Require(base_path, "Core/Time")
 	Require(base_path, "Core/Coroutine")
 	Require(base_path, "Core/Net")
+	Require(base_path, "Core/Worker")
 end
 
 end

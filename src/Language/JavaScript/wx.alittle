@@ -35,6 +35,25 @@ public class WxRequestTask
     public fun abort() {}
 }
 
+public struct WxWorkerEvent
+{
+    any data;
+}
+
+public class WxWorker
+{
+    // 主线程接收支线程的消息
+    // 支线程接收主线程的消息
+    public fun onMessage(Functor<(WxWorkerEvent)> func) {}
+
+    // 主线程向支线程发送消息
+    // 支线程向主线程发送消息
+    public fun postMessage(any data) {}
+
+    // 停止工作
+    public fun terminate() {}
+}
+
 [Native]
 public class wx
 {
@@ -44,5 +63,9 @@ public class wx
 	public fun onTouchEnd(Functor<(javascript.DomElementOnTouchEvent)> callback) {}
     public fun onTouchCancel(Functor<(javascript.DomElementOnTouchEvent)> callback) {}
 	public fun request(WxRequestInfo info) : WxRequestTask {}
+    public fun createWorker(string uri) : WxWorker {}
 }
+
+// 微信小游戏，支线程使用的唯一worker对象
+public var worker:WxWorker;
 
