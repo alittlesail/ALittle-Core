@@ -24,4 +24,10 @@ public class io
     // The mode string can also have a 'b' at the end, which is needed in some systems to open the file in binary mode.
     // This string is exactly what is used in the standard C function fopen.
     public static open(string file_name, string mode) : file {}
+
+    // This function is system dependent and is not available on all platforms.
+	// Starts the program prog in a separated process
+    // and returns a file handle that you can use to read data from this program (if mode is "r", the default)
+    // or to write data to this program (if mode is "w").
+    public static popen(string prog, string mode) : file {}
 }
