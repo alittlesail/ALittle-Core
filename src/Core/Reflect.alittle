@@ -41,7 +41,9 @@ public static Cast<T:class, O:class>(O object) : T
     if (object == null) return null;
     var o_info = reflect(object);
     var t_info = reflect<T>;
-    if (o_info != t_info) return null;
+    while (o_info != null && o_info != t_info)
+        o_info = o_info.__super;
+    if (o_info == null) return null;
     return cast<T>(object);
 }
 

@@ -29,7 +29,10 @@ function ALittle.Cast(T, O, object)
 	end
 	local o_info = (object).__class
 	local t_info = T
-	if o_info ~= t_info then
+	while o_info ~= nil and o_info ~= t_info do
+		o_info = o_info.__super
+	end
+	if o_info == nil then
 		return nil
 	end
 	return object
