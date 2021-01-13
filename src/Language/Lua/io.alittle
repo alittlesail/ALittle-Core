@@ -4,7 +4,7 @@ register namespace lua;
 
 public class file
 {
-    public fun close() {}
+    public fun close() : int {}
     public fun flush() {}
     public fun read(string mode) : string {}
     public fun write(string c) {}
