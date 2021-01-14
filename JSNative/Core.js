@@ -2,6 +2,11 @@
 
 
 let JSRequire = function(base_path, url, thread) {
+	if (typeof(importScripts) !== "undefined") {
+		importScripts("../../../" + base_path + url);
+		thread(undefined);
+		return;
+	}
 	if (typeof(require) !== "undefined") {
 		require("../../../" + base_path + url);
 		thread(undefined);
@@ -43,8 +48,10 @@ window.RequireFromPaths = function(base_path, rel_path, file_list) {
 	});
 }
 
+window.A_CoreBasePath = undefined;
 window.RequireCore = function(base_path) {
 	return new Promise(async function(___COROUTINE, ___) {
+		A_CoreBasePath = base_path;
 		await Require(base_path, "Core/Base");
 		await Require(base_path, "Core/Reflect");
 		await Require(base_path, "Core/JavaScript");
@@ -56,6 +63,7 @@ window.RequireCore = function(base_path) {
 		await Require(base_path, "Core/Time");
 		await Require(base_path, "Core/Coroutine");
 		await Require(base_path, "Core/Net");
+		await Require(base_path, "Core/Worker");
 		___COROUTINE();
 	});
 }
@@ -118,7 +126,10 @@ ALittle.Cast = function(T, O, object) {
 	}
 	let o_info = (object).__class;
 	let t_info = T;
-	if (o_info !== t_info) {
+	while (o_info !== undefined && o_info !== t_info) {
+		o_info = o_info.__super;
+	}
+	if (o_info === undefined) {
 		return undefined;
 	}
 	return object;
