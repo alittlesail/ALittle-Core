@@ -4,7 +4,15 @@ register namespace lua;
 
 public class file
 {
-    public fun close() : int {}
+    public fun close() {}
+    public fun flush() {}
+    public fun read(string mode) : string {}
+    public fun write(string c) {}
+}
+
+public class pfile
+{
+    public fun close() : bool, string, int {}
     public fun flush() {}
     public fun read(string mode) : string {}
     public fun write(string c) {}
@@ -29,5 +37,5 @@ public class io
 	// Starts the program prog in a separated process
     // and returns a file handle that you can use to read data from this program (if mode is "r", the default)
     // or to write data to this program (if mode is "w").
-    public static popen(string prog, string mode) : file {}
+    public static popen(string prog, string mode) : pfile {}
 }
