@@ -24,7 +24,10 @@ ALittle.Cast = function(T, O, object) {
 	}
 	let o_info = (object).__class;
 	let t_info = T;
-	if (o_info !== t_info) {
+	while (o_info !== undefined && o_info !== t_info) {
+		o_info = o_info.__super;
+	}
+	if (o_info === undefined) {
 		return undefined;
 	}
 	return object;
