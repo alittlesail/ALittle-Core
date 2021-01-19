@@ -82,12 +82,17 @@ end
 
 ALittle.IHttpReceiver = Lua.Class(nil, "ALittle.IHttpReceiver")
 
-function ALittle.IHttpReceiver:Ctor(method)
+function ALittle.IHttpReceiver:Ctor(url, method)
+	___rawset(self, "_url", url)
 	___rawset(self, "_method", method)
 end
 
 function ALittle.IHttpReceiver.__getter:method()
 	return self._method
+end
+
+function ALittle.IHttpReceiver.__getter:url()
+	return self._url
 end
 
 local __all_receiver_callback = {}

@@ -58,14 +58,17 @@ public class IHttpFileSender
 // Http协议接口类，负责处理
 public class IHttpReceiver
 {
+    private string _url;
     private string _method;
 
-    public ctor(string method)
+    public ctor(string url, string method)
     {
+        this._url = url;
         this._method = method;
     }
 
     public get method() : string { return this._method; }
+    public get url() : string { return this._url; }
 }
 
 private var __all_receiver_callback = new Map<string, Functor<await(IHttpReceiver, any):any>>();
