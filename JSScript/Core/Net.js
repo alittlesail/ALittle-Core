@@ -68,11 +68,15 @@ ALittle.IHttpFileSender = JavaScript.Class(undefined, {
 }, "ALittle.IHttpFileSender");
 
 ALittle.IHttpReceiver = JavaScript.Class(undefined, {
-	Ctor : function(method) {
+	Ctor : function(url, method) {
+		this._url = url;
 		this._method = method;
 	},
 	get method() {
 		return this._method;
+	},
+	get url() {
+		return this._url;
 	},
 }, "ALittle.IHttpReceiver");
 
