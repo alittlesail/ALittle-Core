@@ -59,7 +59,11 @@ ALittle.String_Sub = function(s, starti, endi) {
 	} else if (endi >= 0) {
 		return s.slice(starti - 1, endi);
 	} else {
-		return s.slice(starti - 1, s.length + endi + 1);
+		endi = s.length + endi + 1;
+		if (endi <= starti - 1) {
+			return "";
+		}
+		return s.slice(starti - 1, endi);
 	}
 }
 

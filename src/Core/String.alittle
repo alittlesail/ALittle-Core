@@ -122,7 +122,11 @@ public static String_Sub(string s, int starti, [Nullable] int endi) : string
     elseif (endi >= 0)
         return cast<javascript.String>(s).slice(starti - 1, endi);
     else
-        return cast<javascript.String>(s).slice(starti - 1, cast<javascript.String>(s).length + endi + 1);
+    {
+        endi = cast<javascript.String>(s).length + endi + 1;
+        if (endi <= starti - 1) return "";
+        return cast<javascript.String>(s).slice(starti - 1, endi);
+    }
 }
     
 // 去掉前后空格，制表符
