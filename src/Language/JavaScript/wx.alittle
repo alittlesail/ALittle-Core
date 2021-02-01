@@ -64,6 +64,9 @@ public class wx
     public fun onTouchCancel(Functor<(javascript.DomElementOnTouchEvent)> callback) {}
 	public fun request(WxRequestInfo info) : WxRequestTask {}
     public fun createWorker(string uri) : WxWorker {}
+
+    public fun setStorageSync(string key, string data) {}
+    public fun getStorageSync(string key) : string {}
 }
 
 // 微信小游戏，支线程使用的唯一worker对象
