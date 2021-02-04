@@ -48,8 +48,6 @@ public class math
     // Returns two numbers, the integral part of x and the fractional part of x.
     public static modf(double x) : double {}
 
-    // Returns xy. (You can also use the expression x^y to compute this value.)
-    public static pow(double x, double y) : double { }
     // Returns the angle x (given in degrees) in radians.
     public static rad(double x) : double { }
     // This function is an interface to the simple pseudo-random generator function rand provided by ANSI C.
