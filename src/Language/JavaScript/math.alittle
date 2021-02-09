@@ -14,8 +14,11 @@ public class Math
     public static sqrt(double v) : double {}
     public static abs(double v) : double {}
     public static cos(double v) : double {}
+    public static acos(double v) : double {}
     public static sin(double v) : double {}
+    public static asin(double v) : double {}
     public static tan(double v) : double {}
+    public static atan(double v) : double {}
 }
 
 [Native]

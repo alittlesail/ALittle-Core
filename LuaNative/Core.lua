@@ -605,7 +605,9 @@ local randomseed = math.randomseed
 local abs = math.abs
 local cos = math.cos
 local sin = math.sin
+local asin = math.asin
 local tan = math.tan
+local atan = math.atan
 local sqrt = math.sqrt
 function ALittle.Math_Min(x, y)
 	if x < y then
@@ -625,8 +627,16 @@ function ALittle.Math_Sin(v)
 	return sin(v)
 end
 
+function ALittle.Math_ASin(v)
+	return asin(v)
+end
+
 function ALittle.Math_Tan(v)
 	return tan(v)
+end
+
+function ALittle.Math_ATan(v)
+	return atan(v)
 end
 
 function ALittle.Math_Cos(v)

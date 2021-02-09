@@ -17,7 +17,11 @@ private var cos = lua.math.cos;
 [Language(Lua)]
 private var sin = lua.math.sin;
 [Language(Lua)]
+private var asin = lua.math.asin;
+[Language(Lua)]
 private var tan = lua.math.tan;
+[Language(Lua)]
+private var atan = lua.math.atan;
 [Language(Lua)]
 private var sqrt = lua.math.sqrt;
 
@@ -42,6 +46,15 @@ public static Math_Sin(double v) : double
     return javascript.Math.sin(v);
 }
 
+public static Math_ASin(double v) : double
+{
+    [Language(Lua)]
+    return asin(v);
+
+    [Language(JavaScript)]
+    return javascript.Math.asin(v);
+}
+
 public static Math_Tan(double v) : double
 {
     [Language(Lua)]
@@ -49,6 +62,15 @@ public static Math_Tan(double v) : double
     
     [Language(JavaScript)]
     return javascript.Math.tan(v);
+}
+
+public static Math_ATan(double v) : double
+{
+    [Language(Lua)]
+    return atan(v);
+
+    [Language(JavaScript)]
+    return javascript.Math.atan(v);
 }
 
 public static Math_Cos(double v) : double

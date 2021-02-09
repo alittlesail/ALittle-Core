@@ -20,8 +20,16 @@ ALittle.Math_Sin = function(v) {
 	return Math.sin(v);
 }
 
+ALittle.Math_ASin = function(v) {
+	return Math.asin(v);
+}
+
 ALittle.Math_Tan = function(v) {
 	return Math.tan(v);
+}
+
+ALittle.Math_ATan = function(v) {
+	return Math.atan(v);
 }
 
 ALittle.Math_Cos = function(v) {
