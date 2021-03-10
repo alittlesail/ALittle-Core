@@ -133,6 +133,9 @@ function ALittle.String_Replace(s, os, ns)
 end
 
 function ALittle.String_CopyTable(info)
+	if info == nil then
+		return nil
+	end
 	do
 		local new_info = {}
 		for key, value in ___pairs(info) do

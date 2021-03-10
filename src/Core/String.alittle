@@ -235,6 +235,8 @@ public static String_Replace(string s, string os, string ns) : string
 // 拷贝
 public static String_CopyTable<T>(const T info) : T
 {
+    if (info == null) return null;
+
     [Language(Lua)]
     {
         var new_info = new Map<any, any>();
