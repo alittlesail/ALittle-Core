@@ -10,6 +10,34 @@ public static Time_GetCurTime() : int
     return Math_Floor(javascript.Date.now() / 1000);
 }
 
+// 构造时间
+public static Time_MakeTime(int year, int month, int day, int hour, int minute, int second) : int
+{
+    [Language(Lua)]
+    {
+        var info = new lua.dateinfo();
+        info.year = year;
+        info.month = month;
+        info.day = day;
+        info.hour = hour;
+        info.min = minute;
+        info.sec = second;
+        return lua.os.time(info);
+    }
+
+    [Language(JavaScript)]
+    {
+        var date = new javascript.Date();
+        date.setFullYear(year);
+        date.setMonth(month - 1);
+        date.setDate(day);
+        date.setHours(hour);
+        date.setMinutes(minute);
+        date.setSeconds(second);
+        return Math_Floor(date.getTime() / 1000);
+    }
+}
+
 // 获取当前时间字符串%Y-%m-%d-%H-%M-%S
 public static Time_GetCurDate([Nullable] int time) : string
 {
@@ -22,7 +50,7 @@ public static Time_GetCurDate([Nullable] int time) : string
         if (time != null) date.setTime(time * 1000);
         var result = date.getFullYear().."-";
 
-        var month = (date.getMonth() + 1);
+        var month = date.getMonth() + 1;
         if (month < 10) result = result.."-0"..month;
         else result = result.."-"..month;
 
@@ -58,7 +86,7 @@ public static Time_GetCurYMD([Nullable] int time) : string
         if (time != null) date.setTime(time * 1000);
         var result = date.getFullYear().."-";
 
-        var month = (date.getMonth() + 1);
+        var month = date.getMonth() + 1;
         if (month < 10) result = result.."-0"..month;
         else result = result.."-"..month;
 
@@ -67,4 +95,73 @@ public static Time_GetCurYMD([Nullable] int time) : string
         else result = result.."-"..day;
         return result;
     }
+}
+
+// 获取当前年份
+public static Time_GetYear([Nullable] int time) : int
+{
+    [Language(Lua)]
+    {
+        var info = cast<lua.dateinfo>(lua.os.date("*t", time));
+        return info.year;
+    }
+
+    [Language(JavaScript)]
+    {
+        var date = new javascript.Date();
+        if (time != null) date.setTime(time * 1000);
+        return date.getFullYear();
+    }
+}
+
+// 获取当前月份
+public static Time_GetMonth([Nullable] int time) : int
+{
+    [Language(Lua)]
+    {
+        var info = cast<lua.dateinfo>(lua.os.date("*t", time));
+        return info.month;
+    }
+
+    [Language(JavaScript)]
+    {
+        var date = new javascript.Date();
+        if (time != null) date.setTime(time * 1000);
+        return date.getMonth() + 1;
+    }
+}
+
+// 获取当前日期
+public static Time_GetDay([Nullable] int time) : int
+{
+    [Language(Lua)]
+    {
+        var info = cast<lua.dateinfo>(lua.os.date("*t", time));
+        return info.day;
+    }
+
+    [Language(JavaScript)]
+    {
+        var date = new javascript.Date();
+        if (time != null) date.setTime(time * 1000);
+        return date.getDate();
+    }
+}
+
+// 根据年份获取当月天数
+public static Time_GetMonthDayCount(int year, int month) : int
+{
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) return 31;
+    
+    if (month == 2)
+    {
+    	if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+        	return 29;
+        else
+        	return 28;
+    }
+
+    if (month >= 1 && month <= 12) return 30;
+
+    return 0;
 }

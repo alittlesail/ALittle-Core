@@ -149,6 +149,9 @@ ALittle.String_Replace = function(s, os, ns) {
 }
 
 ALittle.String_CopyTable = function(info) {
+	if (info === undefined) {
+		return undefined;
+	}
 	{
 		if (typeof(info) === "object") {
 			if (info.__proto__.constructor === Array) {

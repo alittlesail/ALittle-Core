@@ -7,13 +7,22 @@ public class Date
 {
     public static now() : int {}
     public fun setTime(int time) {}
+    public fun getTime() : int {}
 
     public fun getFullYear() : int {}
+    public fun setFullYear(int year) {}
     public fun getMonth() : int {}
-    public fun getDate() : int {}
+    public fun setMonth(int month) {}
+    // 获取星期几，0-6
     public fun getDay() : int {}
+    // 获取和设置几号
+    public fun getDate() : int {}
+    public fun setDate(int day) {}
 
     public fun getHours() : int {}
+    public fun setHours(int hour) {}
     public fun getMinutes() : int {}
+    public fun setMinutes(int minute) {}
     public fun getSeconds() : int {}
+    public fun setSeconds(int second) {}
 }
