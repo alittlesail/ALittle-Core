@@ -140,7 +140,7 @@ public static String_Trim(string text) : string
 }
 
 // 根据分隔符拆分字符串成列表，正常版本
-public static String_Split(string target, string sep, [Nullable] int start_pos) : List<string>
+public static String_Split(string target, string sep, [Nullable] int start_pos, [Nullable] bool ignore_empty) : List<string>
 {
     if (target == null || target == "") return new List<string>();
     if (sep == null || sep == "") sep = ",";
@@ -152,12 +152,20 @@ public static String_Split(string target, string sep, [Nullable] int start_pos) 
         var start_index = String_Find(target, sep, start_pos);
         if (start_index == null)
         {
-            ++fields_count;
-            fields[fields_count] = String_Sub(target, start_pos);
+            var field = String_Sub(target, start_pos);
+            if (!ignore_empty || field != "")
+            {
+                ++fields_count;
+                fields[fields_count] = field;
+            }
             break;
         }
-        ++fields_count;
-        fields[fields_count] = String_Sub(target, start_pos, start_index - 1);
+        var field = String_Sub(target, start_pos, start_index - 1);
+        if (!ignore_empty || field != "")
+        {
+            ++fields_count;
+            fields[fields_count] = field;
+        }
         start_pos = start_index + String_Len(sep);
     }
     return fields;
