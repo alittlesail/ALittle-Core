@@ -71,7 +71,7 @@ ALittle.String_Trim = function(text) {
 	return text.trim();
 }
 
-ALittle.String_Split = function(target, sep, start_pos) {
+ALittle.String_Split = function(target, sep, start_pos, ignore_empty) {
 	if (target === undefined || target === "") {
 		return [];
 	}
@@ -86,12 +86,18 @@ ALittle.String_Split = function(target, sep, start_pos) {
 	while (true) {
 		let start_index = ALittle.String_Find(target, sep, start_pos);
 		if (start_index === undefined) {
-			++ fields_count;
-			fields[fields_count - 1] = ALittle.String_Sub(target, start_pos);
+			let field = ALittle.String_Sub(target, start_pos);
+			if (!ignore_empty || field !== "") {
+				++ fields_count;
+				fields[fields_count - 1] = field;
+			}
 			break;
 		}
-		++ fields_count;
-		fields[fields_count - 1] = ALittle.String_Sub(target, start_pos, start_index - 1);
+		let field = ALittle.String_Sub(target, start_pos, start_index - 1);
+		if (!ignore_empty || field !== "") {
+			++ fields_count;
+			fields[fields_count - 1] = field;
+		}
 		start_pos = start_index + ALittle.String_Len(sep);
 	}
 	return fields;

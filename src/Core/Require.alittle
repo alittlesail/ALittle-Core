@@ -1,0 +1,237 @@
+
+namespace ALittle;
+
+[Language(Lua)]
+var insert = lua.table.insert;
+
+public class Require
+{
+    private Map<string, Map<string, bool>> _rely_map = new Map<string, Map<string, bool>>();
+    private Map<string, Map<string, bool>> _reverse_map = new Map<string, Map<string, bool>>();
+    private ALittle.Thread _thread;
+
+    private int _loading_count = 0;		// 正在加载的数量
+
+    // rely_list是List<string> 第一个表示文件key，后面跟着的都是依赖项
+    // rely_list_list 表示多个依赖项的集合
+    public fun AddPaths(string base_path, string rel_path, List<List<string>> rely_list_list)
+    {
+        base_path = base_path..rel_path;
+
+        // 遍历依赖列表
+        for (var _, rely_list in rely_list_list)
+        {
+            var key = base_path..rely_list[1];
+
+            var sub_map = this._rely_map[key];
+            if (sub_map == null)
+            {
+                sub_map = new Map<string, bool>();
+                this._rely_map[key] = sub_map;
+            }
+
+            for (var index, value in rely_list)
+            {
+                if (index != 1)
+                    sub_map[base_path..value] = true;
+            }
+        }
+    }
+
+    private fun DoNext()
+    {
+        [Language(JavaScript)]
+        {
+            if (this.IsEmpty())
+            {
+                if (this._loading_count <= 0)
+                {
+                    var thread = this._thread;
+                    this._thread = null;
+                    if (thread != null) cast<Functor<(string)>>(thread)(null);
+                }
+                return;
+            }
+
+            var require_list = this.PopList();
+            if (require_list == null)
+            {
+                var thread = this._thread;
+                this._thread = null;
+                if (thread != null) cast<Functor<(string)>>(thread)("require ring");
+                return;
+            }
+
+            for (var index, url in require_list)
+            {
+                // 统计数量
+                this._loading_count += 1;
+
+                // 创建script元素节点，异步加载脚本
+                var script = cast<javascript.ScriptElement>(document.createElement("script"));
+                script.type = "text/javascript";
+                script.async = "async";
+            
+                var error = bind(this.OnLoad, this, "load failed:"..url);
+                script.onabort = error;
+                script.onerror = error;
+                script.ontimeout = error;
+                script.onload = bind(this.OnLoad, this, null);
+            
+                // 设置脚本路径
+                script.src = url..".js";
+                // 添加到文档中
+                document.body.appendChild(script);
+            }
+        }
+    }
+
+    private fun OnLoad(string failed_reason)
+    {
+        --this._loading_count;
+        this.DoNext();
+    }
+
+    public await fun Start() : string
+    {
+        if (this._thread != null) return "doing require";
+        [Language(Lua)]
+        while (true)
+        {
+            if (this.IsEmpty()) return null;
+
+            var require_list = this.PopList();
+            if (require_list == null) return "require ring";
+
+            [Language(Lua)]
+            if (_G["core_require"] != null)
+            {
+                for (var index, url in require_list)
+                    cast<Functor<(string):bool>>(_G["core_require"])(url);
+            }
+            else
+            {
+                for (var index, url in require_list)
+                    lua.require(url);
+            }
+
+            return null;
+        }
+
+        [Language(JavaScript)]
+        if (javascript.typeof(javascript.importScripts) != "undefined")
+        {
+            while (true)
+            {
+                if (this.IsEmpty()) return null;
+
+                var require_list = this.PopList();
+                if (require_list == null) return "require ring";
+
+                for (var index, url in require_list)
+                    javascript.importScripts("../../../"..url);
+            }
+
+            return null;
+        }
+
+    
+        [Language(JavaScript)]
+        // 检查是否有require可以调用，有则使用
+        if (javascript.typeof(javascript.require) != "undefined")
+        {
+            while (true)
+            {
+                if (this.IsEmpty()) return null;
+
+                var require_list = this.PopList();
+                if (require_list == null) return "require ring";
+
+                for (var index, url in require_list)
+                    javascript.require("../../../"..url);
+            }
+
+            return null;
+        }
+
+        this._thread = co;
+
+        // 反向依赖
+        this._reverse_map = new Map<string, Map<string, bool>>();
+        for (var key, value_map in this._rely_map)
+        {
+            // 遍历依赖
+            for (var value, _ in value_map)
+            {
+                var sub_map = this._reverse_map[value];
+                if (sub_map == null)
+                {
+                    sub_map = new Map<string, bool>();
+                    this._reverse_map[value] = sub_map;
+                }
+                sub_map[key] = true;
+            }
+        }
+
+        this.DoNext();
+        return yield;
+    }
+
+    private fun IsEmpty() : bool
+    {
+        var empty = true;
+        [Language(Lua)]
+        empty = lua.next(this._rely_map) == null;
+        [Language(JavaScript)]
+        empty = cast<javascript.Map>(this._rely_map).size == 0;
+
+        return empty;
+    }
+
+    private fun PopList() : List<string>
+    {
+        // 开始加载
+        var require_list:List<string> = null;
+        for (var key, value_map in this._rely_map)
+        {
+            var empty = false;
+            [Language(Lua)]
+            empty = lua.next(value_map) == null;
+            [Language(JavaScript)]
+            empty = cast<javascript.Map>(value_map).size == 0;
+
+            if (empty)
+            {
+                if (require_list == null) require_list = new List<string>();
+
+                [Language(Lua)]
+                insert(require_list, cast<int>(key));
+                [Language(JavaScript)]
+                cast<javascript.Array>(require_list).push(key);
+            }
+        }
+
+        if (require_list == null) return null;
+
+        // 移除依赖
+        for (var index, value in require_list)
+        {
+            var sub_map = this._reverse_map[value];
+            if (sub_map != null)
+            {
+                for (var key, _ in sub_map)
+                {
+                    var rely_sub_map = this._rely_map[key];
+                    if (rely_sub_map != null) rely_sub_map[value] = null;
+                }
+            }
+        }
+
+        // 清理
+        for (var index, url in require_list)
+            this._rely_map[url] = null;
+
+        // 返回结果
+        return require_list;
+    }
+}

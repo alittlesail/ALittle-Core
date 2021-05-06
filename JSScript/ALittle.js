@@ -35,19 +35,6 @@ window.RunScript = function(script, path) {
 	eval(script);
 }
 
-window.RequireFromPaths = function(base_path, rel_path, file_list) {
-	return new Promise(async function(___COROUTINE, ___) {
-		let ___OBJECT_1 = file_list;
-		for (let index = 1; index <= ___OBJECT_1.length; ++index) {
-			let path = ___OBJECT_1[index - 1];
-			if (path === undefined) break;
-			path = path.substring(0, path.length - 8);
-			await Require(base_path, rel_path + path);
-		}
-		___COROUTINE();
-	});
-}
-
 window.A_CoreBasePath = undefined;
 window.RequireCore = function(base_path) {
 	return new Promise(async function(___COROUTINE, ___) {
@@ -64,6 +51,7 @@ window.RequireCore = function(base_path) {
 		await Require(base_path, "Core/Coroutine");
 		await Require(base_path, "Core/Net");
 		await Require(base_path, "Core/Worker");
+		await Require(base_path, "Core/Require");
 		___COROUTINE();
 	});
 }

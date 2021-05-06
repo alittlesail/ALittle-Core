@@ -22,14 +22,6 @@ function _G.RunScript(script, path)
 	end
 end
 
-function _G.RequireFromPaths(base_path, rel_path, file_list)
-	local ___COROUTINE = coroutine.running()
-	for index, path in ___ipairs(file_list) do
-		path = string.sub(path, 1, -9)
-		Require(base_path, rel_path .. path)
-	end
-end
-
 _G.A_CoreBasePath = nil
 function _G.RequireCore(base_path)
 	local ___COROUTINE = coroutine.running()
@@ -46,6 +38,7 @@ function _G.RequireCore(base_path)
 	Require(base_path, "Core/Coroutine")
 	Require(base_path, "Core/Net")
 	Require(base_path, "Core/Worker")
+	Require(base_path, "Core/Require")
 end
 
 end
