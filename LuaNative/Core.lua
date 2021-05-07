@@ -1361,6 +1361,7 @@ function ALittle.Require:Ctor()
 	___rawset(self, "_rely_map", {})
 	___rawset(self, "_reverse_map", {})
 	___rawset(self, "_loading_count", 0)
+	___rawset(self, "_file_count", 0)
 end
 
 function ALittle.Require:AddPaths(base_path, rel_path, rely_list_list)
@@ -1383,7 +1384,8 @@ end
 function ALittle.Require:DoNext()
 end
 
-function ALittle.Require:OnLoad(failed_reason)
+function ALittle.Require:OnLoad(url, error)
+	self:RemoveReply(url)
 	self._loading_count = self._loading_count - 1
 	self:DoNext()
 end
@@ -1393,26 +1395,7 @@ function ALittle.Require:Start()
 	if self._thread ~= nil then
 		return "doing require"
 	end
-	while true do
-		if self:IsEmpty() then
-			return nil
-		end
-		local require_list = self:PopList()
-		if require_list == nil then
-			return "require ring"
-		end
-		if _G["core_require"] ~= nil then
-			for index, url in ___ipairs(require_list) do
-				_G["core_require"](url)
-			end
-		else
-			for index, url in ___ipairs(require_list) do
-				require(url)
-			end
-		end
-		return nil
-	end
-	self._thread = ___COROUTINE
+	self._file_count = 0
 	self._reverse_map = {}
 	for key, value_map in ___pairs(self._rely_map) do
 		for value, _ in ___pairs(value_map) do
@@ -1423,22 +1406,42 @@ function ALittle.Require:Start()
 			end
 			sub_map[key] = true
 		end
+		self._file_count = self._file_count + (1)
 	end
+	while true do
+		if self._file_count <= 0 then
+			return nil
+		end
+		local require_list = self:PopList()
+		if require_list == nil then
+			return "require ring"
+		end
+		for index, url in ___ipairs(require_list) do
+			self:RemoveReply(url)
+		end
+		if _G["core_require"] ~= nil then
+			for index, url in ___ipairs(require_list) do
+				_G["core_require"](url)
+			end
+		else
+			for index, url in ___ipairs(require_list) do
+				require(url)
+			end
+		end
+	end
+	self._thread = ___COROUTINE
 	self:DoNext()
 	return coroutine.yield()
-end
-
-function ALittle.Require:IsEmpty()
-	local empty = true
-	empty = next(self._rely_map) == nil
-	return empty
 end
 
 function ALittle.Require:PopList()
 	local require_list = nil
 	for key, value_map in ___pairs(self._rely_map) do
-		local empty = false
-		empty = next(value_map) == nil
+		local empty = true
+		for _1, _v2 in ___pairs(value_map) do
+			empty = false
+			break
+		end
 		if empty then
 			if require_list == nil then
 				require_list = {}
@@ -1449,21 +1452,23 @@ function ALittle.Require:PopList()
 	if require_list == nil then
 		return nil
 	end
-	for index, value in ___ipairs(require_list) do
-		local sub_map = self._reverse_map[value]
-		if sub_map ~= nil then
-			for key, _ in ___pairs(sub_map) do
-				local rely_sub_map = self._rely_map[key]
-				if rely_sub_map ~= nil then
-					rely_sub_map[value] = nil
-				end
+	for index, url in ___ipairs(require_list) do
+		self._rely_map[url] = nil
+		self._file_count = self._file_count - (1)
+	end
+	return require_list
+end
+
+function ALittle.Require:RemoveReply(value)
+	local sub_map = self._reverse_map[value]
+	if sub_map ~= nil then
+		for key, _ in ___pairs(sub_map) do
+			local rely_sub_map = self._rely_map[key]
+			if rely_sub_map ~= nil then
+				rely_sub_map[value] = nil
 			end
 		end
 	end
-	for index, url in ___ipairs(require_list) do
-		self._rely_map[url] = nil
-	end
-	return require_list
 end
 
 end
