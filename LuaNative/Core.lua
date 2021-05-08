@@ -59,7 +59,7 @@ function ALittle.RegStruct(hash, name, info)
 	end
 	local old_info = __all_id_struct[hash]
 	if old_info ~= nil then
-		Lua.Throw("RegReflect 名字为" .. name .. "和名字为" .. old_info.name .. "哈希值冲突, 请为" .. name .. "修改名字来避开冲突！")
+		error("RegReflect 名字为" .. name .. "和名字为" .. old_info.name .. "哈希值冲突, 请为" .. name .. "修改名字来避开冲突！")
 	end
 	__all_name_struct[name] = info
 	__all_id_struct[hash] = info
