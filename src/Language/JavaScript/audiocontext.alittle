@@ -2,9 +2,15 @@
 [Language(JavaScript)]
 register namespace javascript;
 
+public struct AudioContextOptions
+{
+    int sampleRate;
+}
+
 [Native]
 public class AudioContext
 {
+    public ctor([Nullable] AudioContextOptions options) {}
     public fun createScriptProcessor(int bufferSize, int numberOfInputChannels, int numberOfOutputChannels) : ScriptProcessorNode {}
     public get destination() : AudioDestinationNode {}
     public fun close() {}
