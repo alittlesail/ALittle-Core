@@ -1,0 +1,13 @@
+
+[Language(JavaScript)]
+register namespace javascript;
+
+[Native]             
+public class Float32Array
+{
+    public ctor(ArrayBuffer buffer, [Nullable] int offset, [Nullable] int length) {}
+
+    public get length() : int {}
+    public get byteLength() : int {}
+    public get buffer() : javascript.ArrayBuffer {}
+}

@@ -1,0 +1,40 @@
+
+[Language(JavaScript)]
+register namespace javascript;
+
+[Native]
+public class AudioContext
+{
+    public fun createScriptProcessor(int bufferSize, int numberOfInputChannels, int numberOfOutputChannels) : ScriptProcessorNode {}
+    public get destination() : AudioDestinationNode {}
+    public fun close() {}
+}
+
+[Native]
+public class webkitAudioContext : AudioContext {}
+
+[Native]
+public class AudioBuffer
+{
+    public fun getChannelData(int index) : Float32Array {}
+}
+
+public struct AudioProcessingEvent
+{
+	AudioBuffer inputBuffer;
+	AudioBuffer outputBuffer;
+}
+
+[Native]
+public class ScriptProcessorNode
+{
+    public set onaudioprocess(Functor<(AudioProcessingEvent)> func) {}
+    public fun connect(AudioDestinationNode node) {}
+    public fun disconnect(AudioDestinationNode node) {}
+}
+
+[Native]
+public class AudioDestinationNode
+{
+
+}
