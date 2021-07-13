@@ -10,6 +10,29 @@ public static Time_GetCurTime() : int
     return Math_Floor(javascript.Date.now() / 1000);
 }
 
+// 获取当前年月日
+public static Time_GetCurBeginTime([Nullable] int time) : int
+{
+    [Language(Lua)]
+    {
+        var info = cast<lua.dateinfo>(lua.os.date("*t", time));
+        info.hour = 0;
+        info.min = 0;
+        info.sec = 0;
+        return lua.os.time(info);
+    }
+
+    [Language(JavaScript)]
+    {
+        var date = new javascript.Date();
+        if (time != null) date.setTime(time * 1000);
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        return Math_Floor(date.getTime() / 1000);
+    }
+}
+
 // 构造时间
 public static Time_MakeTime(int year, int month, int day, int hour, int minute, int second) : int
 {

@@ -11,6 +11,16 @@ function ALittle.Time_GetCurTime()
 	return os.time()
 end
 
+function ALittle.Time_GetCurBeginTime(time)
+	do
+		local info = os.date("*t", time)
+		info.hour = 0
+		info.min = 0
+		info.sec = 0
+		return os.time(info)
+	end
+end
+
 function ALittle.Time_MakeTime(year, month, day, hour, minute, second)
 	do
 		local info = {}
