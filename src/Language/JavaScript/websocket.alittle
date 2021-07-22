@@ -16,6 +16,7 @@ public class XMLHttpRequest
     public fun send(any body) {}
     public fun setRequestHeader(string header, string value) {}
     public get statusText() : string {}
+    public fun getAllResponseHeaders() : string {}
     public get responseText() : string {}
     public set responseType(string type) {}
     public get response() : any {} // 返回一个 ArrayBuffer、Blob、Document，或 DOMString，具体是哪种类型取决于 XMLHttpRequest.responseType 的值

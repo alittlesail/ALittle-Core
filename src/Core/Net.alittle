@@ -119,6 +119,9 @@ public class IHttpSender
     protected fun HandleFailed(string reason) {}
     public fun Stop() {}
 
+    public fun GetHead() : string { return null; }
+    public fun GetResponse() : string { return null; }
+
     // 提供子类继承
     protected fun SendRPC(Thread thread, string method, any content) { throw("not impl"); }
 
