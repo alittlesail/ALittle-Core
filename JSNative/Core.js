@@ -744,6 +744,19 @@ ALittle.Time_GetCurTime = function() {
 	return ALittle.Math_Floor(Date.now() / 1000);
 }
 
+ALittle.Time_GetCurBeginTime = function(time) {
+	{
+		let date = new Date();
+		if (time !== undefined) {
+			date.setTime(time * 1000);
+		}
+		date.setHours(0);
+		date.setMinutes(0);
+		date.setSeconds(0);
+		return ALittle.Math_Floor(date.getTime() / 1000);
+	}
+}
+
 ALittle.Time_MakeTime = function(year, month, day, hour, minute, second) {
 	{
 		let date = new Date();
