@@ -1099,6 +1099,14 @@ end
 function ALittle.IHttpSender:Stop()
 end
 
+function ALittle.IHttpSender:GetHead()
+	return nil
+end
+
+function ALittle.IHttpSender:GetResponse()
+	return nil
+end
+
 function ALittle.IHttpSender:SendRPC(thread, method, content)
 	Lua.Throw("not impl")
 end

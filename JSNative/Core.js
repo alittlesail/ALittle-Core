@@ -1031,6 +1031,12 @@ ALittle.IHttpSender = JavaScript.Class(undefined, {
 	},
 	Stop : function() {
 	},
+	GetHead : function() {
+		return undefined;
+	},
+	GetResponse : function() {
+		return undefined;
+	},
 	SendRPC : function(thread, method, content) {
 		throw new Error("not impl");
 	},
