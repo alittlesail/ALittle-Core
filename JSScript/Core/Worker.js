@@ -67,7 +67,12 @@ let __all_worker_rpc_callback = new Map();
 let __all_worker_rpc_return_id = new Map();
 ALittle.RegWorkerRpcCallback = function(msg_id, callback, return_id) {
 	if (__all_worker_rpc_callback.get(msg_id) !== undefined) {
-		ALittle.Error("RegWorkerRpcCallback消息回调函数注册失败，名字为" + msg_id + "已存在");
+		let name = "unknow";
+		let rflct = ALittle.FindStructById(msg_id);
+		if (rflct !== undefined) {
+			name = rflct.name;
+		}
+		ALittle.Error("RegWorkerRpcCallback消息回调函数注册失败，名字为 msg_id:" + msg_id + " msg_name:" + name + "已存在");
 		return;
 	}
 	__all_worker_rpc_callback.set(msg_id, callback);

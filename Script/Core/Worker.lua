@@ -78,7 +78,12 @@ local __all_worker_rpc_callback = {}
 local __all_worker_rpc_return_id = {}
 function ALittle.RegWorkerRpcCallback(msg_id, callback, return_id)
 	if __all_worker_rpc_callback[msg_id] ~= nil then
-		ALittle.Error("RegWorkerRpcCallback消息回调函数注册失败，名字为" .. msg_id .. "已存在")
+		local name = "unknow"
+		local rflct = ALittle.FindStructById(msg_id)
+		if rflct ~= nil then
+			name = rflct.name
+		end
+		ALittle.Error("RegWorkerRpcCallback消息回调函数注册失败，名字为 msg_id:" .. msg_id .. " msg_name:" .. name .. "已存在")
 		return
 	end
 	__all_worker_rpc_callback[msg_id] = callback

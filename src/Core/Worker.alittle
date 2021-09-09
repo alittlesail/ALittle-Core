@@ -79,7 +79,10 @@ protected static RegWorkerRpcCallback(int msg_id, Functor<await(IWorker, any) : 
 {
     if (__all_worker_rpc_callback[msg_id] != null)
     {
-        Error("RegWorkerRpcCallback消息回调函数注册失败，名字为"..msg_id.."已存在");
+        var name = "unknow";
+        var rflct = FindStructById(msg_id);
+        if (rflct != null) name = rflct.name;
+        Error("RegWorkerRpcCallback消息回调函数注册失败，名字为 msg_id:"..msg_id.." msg_name:"..name.."已存在");
         return;
     }
     __all_worker_rpc_callback[msg_id] = callback;
