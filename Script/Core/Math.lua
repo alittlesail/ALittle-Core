@@ -16,6 +16,7 @@ local abs = math.abs
 local cos = math.cos
 local sin = math.sin
 local asin = math.asin
+local acos = math.acos
 local tan = math.tan
 local atan = math.atan
 local sqrt = math.sqrt
@@ -39,6 +40,10 @@ end
 
 function ALittle.Math_ASin(v)
 	return asin(v)
+end
+
+function ALittle.Math_ACos(v)
+	return acos(v)
 end
 
 function ALittle.Math_Tan(v)

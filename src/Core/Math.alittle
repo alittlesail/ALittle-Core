@@ -19,6 +19,8 @@ private var sin = lua.math.sin;
 [Language(Lua)]
 private var asin = lua.math.asin;
 [Language(Lua)]
+private var acos = lua.math.acos;
+[Language(Lua)]
 private var tan = lua.math.tan;
 [Language(Lua)]
 private var atan = lua.math.atan;
@@ -53,6 +55,15 @@ public static Math_ASin(double v) : double
 
     [Language(JavaScript)]
     return javascript.Math.asin(v);
+}
+
+public static Math_ACos(double v) : double
+{
+    [Language(Lua)]
+    return acos(v);
+
+    [Language(JavaScript)]
+    return javascript.Math.acos(v);
 }
 
 public static Math_Tan(double v) : double
